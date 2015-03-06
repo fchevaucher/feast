@@ -1,0 +1,111 @@
+body {margin-left: 0px;margin-right: 0px;margin-top: 0px;margin-bottom: 0px;font-size: 10pt;font-family: Verdana, Arial, Helvetica, sans-serif}
+div {margin:0;padding:0;border:0;background:transparent}
+.w8 {width:815px; clear:both}
+.s15 {height:15px;line-height:8px;width:150px;clear:right}
+#bd {width:817px}
+#tp {border: 1px solid #000; border-top:0}
+#tt {height:31px;text-align:left}
+#tu {height:31px;font-size:10px;line-height:12px;float:right;width:200px;text-align:right;padding-right:10px;color:#bbbbbb}
+#tu a {text-decoration:none;color:#bbbbbb}
+#tu a:hover {color:#6D9F1A}
+#tb {background:#5D8C30;width:100%;line-height:2px;height:3px;clear:left}
+#ul {text-align:left;width:600px;float:left;height:64px;background:url(branchw.gif);background-repeat:no-repeat;background-position:50px 0px; overflow:hidden;color:#333}
+#ul div {padding-top:6px;}
+#ur {float:right;width:200px;text-align:right}
+#us {width:291px;background-image: url(p1/ln_b.gif);background-repeat: repeat-x;}
+#ut {float:right;clear:right;padding-top:20px;width:290px}
+#un {border-bottom:1px solid #000;}
+#fn {border: 1px solid #000}
+#fl {border-top: 1px solid #000;width:100%;}
+td {vertical-align:bottom;border:0;padding:0}
+td.ll {width:165px}
+td.rr {width:290px;background-image: url(p1/grgrd.gif);background-repeat: repeat-y;vertical-align:top}
+td.mc {}
+td.mr {width:10px}
+#ft {height:40px}
+#ft td.ll, td.ml, td.mc, td.mr {border-top: 1px solid #000}
+td.rt {text-align:right}
+td.mr {background: #87C313}
+td.mg {background: #87C313}
+#sr td {height:18px}
+#sf {background-image: url(p1/sr_rp.gif);background-repeat: repeat-x;width:250px}
+#sf input {padding:1px 0 0;margin:1px 0 0;font-size:10px;height:13px;width:240px;background:transparent;border:1px solid #fff;border:none}
+#sep {height:20px}
+#cn {border: 1px solid #000;text-align:left}
+#ca {width:166px}
+#ct {clear:both}
+#bp {width:40px}
+#ct table tr td {vertical-align:top;border:0;padding:0}
+#cp {width:150px}
+#cl {width:150px}
+#ch {width:50px}
+td.br {background:#6D9F1A;width:4px}
+td.bs {width:12px}
+tr:hover td.bs {background-image: url(p1/gt.gif);background-repeat: no-repeat}
+a{text-decoration:none;color:#444444}
+a:hover{color:#87C313;}
+table.tshw {margin:0;padding:0;border:0}
+table.tshw td {vertical-align:top;padding:3px 0 16px;}
+table.tshw td.ll {padding-top:0;}
+table.relshw {margin:0;padding:0;border:0;}
+table.relshw tr.odd td{background:#DDD}
+table.relshw td {padding:2px 7px 2px 8px}
+.clName {font-size:13px;margin:12px 0;background:#6ea019;padding:3px;width:150px;font-weight:bold;color:#fff;text-align:right;}
+table.tshw .clName {margin-top:0}
+.clName a{color:#fff}
+.clName a:hover{color:#ffec2f}
+.cpr {width:120px;float:left;background:#DDD url(grstop.gif);background-repeat:repeat-y;color:#DFDFDF;height:50px;padding-left:4px;overflow:hidden;}
+.cpa {width:36px;height:50px;float:left;color:#fff;background-image:url(arrwstop.gif);background-repeat:no-repeat;}
+.cpb {padding:15px 20px 0 0;text-align:right;font-weight:bold;}
+.cpt {width:36px;height:50px;float:left;color:#fff;background-image:url(arthstop.gif);background-repeat:no-repeat;}
+#vmenu {font-family: Verdana, Arial, Helvetica, sans-serif;font-size: 15px;width: 
+200px;padding: 0px;margin: 0px;}
+#vmenu ul {list-style: none;margin: 0px;padding: 0px;border: none;}
+#vmenu ul li {margin: 0px;padding: 0px;}
+#vmenu ul li a{display: block;padding: 5px 0px 2px 10px;text-decoration:none;color:#FFF;width:100%;text-align:left;height:32px;font-weight:bold}
+#vmenu ul li a.slctd {background:#6ea019}
+#vmenu ul li a:hover, #vertmenu ul li a:focus {color: #000000;background-color: #eeeeee;}
+#vmenu ul li span {font-size:9px}
+#vmenu ul li b {color:#507F08}
+li.sp b span {line-height:6px}
+.week {padding-left:150px;}
+.week div{float: left;  width: 54px;height: 54px;color: #ffffff;font-family: Calibri, Arial, Tahoma, Verdana;text-align:center;margin-right: 1px;margin-bottom: 15px;}
+.week div p {margin: 0;padding: 0; border: 0;outline: 0;font-weight: inherit;font-style: inherit;font-size: 100%;font-family: inherit;vertical-align: baseline;  }
+.week div p span{font-size:8px;line-height:8px}
+.month td {width: 50px;color: #ffffff;font-family: Calibri, Arial, Tahoma, Verdana;text-align:left;vertical-align:top;margin: 0; border: 0;outline: 0;padding:1px 0 0 4px}
+.month td:hover {background:#737373 url(addtoday.gif)}
+.month td.thur {background:#ddd}
+.month tr, div p.g1 {font-weight: bold;height:35px;background:#DDD;} 
+.month td.meal {font-weight: bold;background:#87C313 url(mtoday.gif);background-repeat:no-repeat;text-align:left;}
+.month td.meal:hover {background:#ae430e url(nottoday.gif);}
+.month td.nomeal {font-weight: bold;background:#ae430e url(nottodayb.gif);background-repeat:no-repeat;text-align:left;}
+.month td.nomeal:hover {background:#737373 url(addtoday.gif);}
+.month td.gray {background:#eee;}
+.month tr.top {height:20px}
+.month tr.top td {text-align:center;background:#DDD;}
+.month tr.top td.meal {background:#87C313}
+.month td.meal span {font-size: 10px;line-height:10px}
+div.meal p.g1 {font-weight: bold;font-size: 30px;height:35px;background:#87C313 url(dtoday.gif);background-repeat:no-repeat;background-position:5px 2px;}
+.month tr.hed {height:20px}
+.month tr.hed td, div p.g2 {font-weight: bold;text-transform: uppercase;background:#AAA; text-align:center}
+.month tr.hed td.meal, div.meal p.g2 {font-weight: bold;text-transform: uppercase;background:#507F08}
+#thsMeal {padding-left:25px;}
+#thsMeal  .row {width:375px;}
+#thsMeal  .row div {float:left;width:127px;}
+#thsMeal  .row div.num {width:40px;}
+#thsMeal  .row div.mid {width:95px;}
+.in8 {width:125px;}
+.in6 {width:88px;}
+.h6 {line-height:6px}
+#shw {text-align:left;width:500px;margin:0 0 25px 105px;}
+#shw a{text-decoration:none;color:#444444}
+#shw a:hover{color:#87C313;}
+.or_box {width:397px;background:transparent;clear:both; text-align:right;padding:5px}
+.or_box:hover {background:#87C313}
+.or_box input {background:transparent;color:#000;border:none;text-align:right;width:190px;cursor:default;}
+input.or_name {font-size:16px;font-weight:bold;text-align:left;float:left;width:160px}
+input.btn {width:32px;border:1px solid #fff;margin:1px 0 1px 5px}
+input.btn:hover {background:#f4e02e;border:1px solid #000;color:#000}
+.fbt {clear:both;width:815px;height: 20px;margin: 0;padding:0;border:0;font-size: 10px;text-align: left}
+.fbt a {text-decoration:none;color: #BBBBBB}
+.fbt a:hover {color: #87C313}

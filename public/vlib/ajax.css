@@ -1,0 +1,10 @@
+#mq_ac{ width:200px;border:0;display:none; position:relative;}
+
+#mq_ac ul {border:solid 1px #6D951A;padding:0;background:#6D951A;margin:0;list-style:none}
+#mq-ac li{padding:0; margin:0; border:0; list-style:none}
+#mq_ac li a{display:block; padding:4px; text-decoration:none; color:#000000; font-weight:bold;}
+
+#mq_ac li a small{text-decoration:none; font-weight:normal;}
+
+#mq_ac li a:hover{background:#87C313;}
+

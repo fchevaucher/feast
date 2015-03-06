@@ -1,0 +1,14 @@
+body {margin-left: 0px;margin-right: 0px;margin-top: 0px;margin-bottom: 0px;font-size: 10pt;font-family: Verdana, Arial, Helvetica, sans-serif}
+div {margin:0;padding:0;border:0;background:transparent}
+.w8 {width:815px; clear:both}
+.s15 {height:15px;line-height:8px;width:150px;clear:right}
+#tt {height:31px;text-align:left}
+#tu {height:31px;font-size:10px;line-height:12px;float:right;width:200px;text-align:right;padding-right:10px;color:#bbbbbb}
+#tu a {text-decoration:none;color:#bbbbbb}
+#tu a:hover {color:#6D9F1A}
+#tb {background:#5D8C30;width:100%;line-height:2px;height:3px;clear:left}
+#ul {float:left;width:350px}
+#ur {float:right;width:200px;text-align:right}
+#tp {border: 1px solid #000; border-top:0}
+.yel {color:#f0d128;}
+.gry {color:#777;}

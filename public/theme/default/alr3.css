@@ -1,0 +1,76 @@
+body {margin-left: 0px;margin-right: 0px;margin-top: 0px;margin-bottom: 0px;font-size: 11px;font-family: Verdana, Arial, Helvetica, sans-serif}
+div {margin:0;padding:0;border:0;background:transparent}
+.w8 {width:815px; clear:both}
+.s15 {height:15px;line-height:8px;width:150px;clear:right}
+#bd {width:817px}
+#tp {border: 1px solid #000; border-top:0}
+#tt {height:31px;text-align:left}
+#tu {height:31px;font-size:10px;line-height:12px;float:right;width:200px;text-align:right;padding-right:10px;color:#bbbbbb}
+#tu a {text-decoration:none;color:#bbbbbb}
+#tu a:hover {color:#6D9F1A}
+#tb {background:#5D8C30;width:100%;line-height:2px;height:3px;clear:left}
+#ul {float:left;width:350px}
+#ur {float:right;width:200px;text-align:right}
+
+acronym {
+border: 0;
+}
+
+input {border:1px solid #456F06;background:transparent;color:#fff;font-size:10pt;padding:1px 3px;margin:4px 0 0;}
+input:hover {border:1px solid #ffffff;background:#87C313;color:#fff}
+
+
+
+input.fb{
+font-size: 11px;
+font-weight: normal;
+color: #555555; 
+background: #EEEEEE; 
+border: 1px solid #444444; 
+padding: 4px 5px;
+margin: 35px 9px 0px;
+font-family: helvetia, tahoma, arial, verdana;
+}
+
+input.fb:hover {
+color: #888888; 
+border: 1px solid #FF9900; 
+}
+
+input.fb:active {
+color: #FFFFFF; 
+background: #FFBB00;
+border: 1px solid #444444; 
+}
+
+form {
+margin: 0px
+}
+
+#center {
+position:relative;
+top:0px;
+left:-50px;
+margin: 0;
+padding: 0;
+width: 480px;
+height:300px;
+}
+
+#idgroup {
+position: relative;
+top:70px;
+left:-20px;
+width:380px;
+float:right;
+text-align:right;
+}
+
+#infoalign {
+padding: 25px 0 0 25px;
+background:transparent;
+margin:0;
+text-align:center;
+width:220px;
+color: #FFFFFF;
+}
