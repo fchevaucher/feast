@@ -6,7 +6,6 @@
 date_default_timezone_set('America/Montreal');
 
 session_start();
-include '../include/config/mysql_login.php';
 
 if (isset($_SESSION['f_user'])) {
 	//A session is already open. Authenticate the stated user.
@@ -16,7 +15,7 @@ if (isset($_SESSION['f_user'])) {
 	$f_user = $_SESSION['f_user'];
 
 	//load MySQL Access
-	include '/var/www/feastdb/include/config/mysql_login.php';
+    include '../include/config/mysql_login.php';
 	mysql_connect(MYSQL_HOST, $mysqluser, $mysqlpass);
 	mysql_select_db("mowdata");
 
@@ -42,7 +41,7 @@ if (isset($_SESSION['f_user'])) {
 	$f_user = $_POST['f_user'];
 
 	//load MySQL Access
-	include '/var/www/feastdb/include/config/mysql_login.php';
+	include '../include/config/mysql_login.php';
 	mysql_connect(MYSQL_HOST, $mysqluser, $mysqlpass);
 	mysql_select_db("mowdata");
 

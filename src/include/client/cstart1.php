@@ -26,7 +26,7 @@ $currentMonth = date('m');
 //$currentMonth="4";
 $gnobdays = 0;
 for ($i = 0; $i <= 6; $i++) {
-include '/var/www/feastdb/include/config/mysql_login.php';
+include '../config/mysql_login.php';
 mysql_connect(MYSQL_HOST, $mysqluser, $mysqlpass);
 mysql_select_db("mowdata");
 $query = "SELECT * FROM client WHERE (mealstatus='A' or mealstatus='S') AND bday LIKE '%" .

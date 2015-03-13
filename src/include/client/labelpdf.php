@@ -90,7 +90,7 @@ $pdf->SetAutoPageBreak(TRUE, 6);
 $pdf->setLanguageArray($l);
 $pdf->SetFont('helvetica', '', 12);
 
-  include '/var/www/feastdb/include/config/mysql_login.php';
+  include '../config/mysql_login.php';
   mysql_connect(MYSQL_HOST, $mysqluser, $mysqlpass);
   mysql_select_db("mowdata");
 

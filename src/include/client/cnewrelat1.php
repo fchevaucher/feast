@@ -54,7 +54,7 @@ href="?go=search"><span class="h6"> <br></span>search</a></li></ul></div></div><
 $pass_mid = $_GET['mid'];
 
 //setup database entry info
-include '/var/www/feastdb/include/config/mysql_login.php';
+include '../config/mysql_login.php';
 mysql_connect(MYSQL_HOST, $mysqluser, $mysqlpass);
 mysql_select_db("mowdata");
 
