@@ -16,27 +16,27 @@ for ($i = 1; $i < 16; $i++) {
 
 
 // extend TCPF with custom functions
-class MYPDF extends TCPDF { 
+class MYPDF extends TCPDF {
     public function MultiRow($left, $right) {
         //MultiCell($w, $h, $txt, $border=0, $align='J', $fill=0, $ln=1, $x='', $y='', $reseth=true, $stretch=0)
-        
+
         $page_start = $this->getPage();
         $y_start = $this->GetY();
-        
+
         // write the left cell
         $this->MultiCell(40, 0, $left, 0, 'R', 0, 2, '', '', true, 0);
-        
+
         $page_end_1 = $this->getPage();
         $y_end_1 = $this->GetY();
-        
+
         $this->setPage($page_start);
-        
+
         // write the right cell
         $this->MultiCell(0, 0, $right, 0, 'J', 0, 1, $this->GetX() ,$y_start, true, 0);
-        
+
         $page_end_2 = $this->getPage();
         $y_end_2 = $this->GetY();
-        
+
         // set the new row position by case
         if (max($page_end_1,$page_end_2) == $page_start) {
             $ynew = max($y_end_1, $y_end_2);
@@ -47,11 +47,11 @@ class MYPDF extends TCPDF {
         } else {
             $ynew = $y_end_2;
         }
-        
+
         $this->setPage(max($page_end_1,$page_end_2));
         $this->SetXY($this->GetX(),$ynew);
     }
-    
+
 }
 
 $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
@@ -93,7 +93,7 @@ $pdf->setLanguageArray($l);
 $pdf->SetFont('helvetica', '', 12);
 
   include '/var/www/feastdb/include/config/mysql_login.php';
-  mysql_connect("localhost", $mysqluser, $mysqlpass);
+  mysql_connect(MYSQL_HOST, $mysqluser, $mysqlpass);
   mysql_select_db("mowdata");
 
 
@@ -174,21 +174,21 @@ $tMID = $row['mid'];
 if ($row['dType']=="R") {
 	//this client receives regular deliveries
 	//does this person have a meal scheduled for this weekday?
-	if ($row["d" . date('D')] == 1){ 
+	if ($row["d" . date('D')] == 1){
 		if ($specials[$tMID]['is'] == 1){
 			if ($specials[$tMID]['suspend'] != 1){
 		//cancel if there is a suspension
 		//add special meal if there is one
-		
+
 		$rTotals['no'] ++;
 		$rTotals['meals'] += $specials[$tMID]['meals'];
 		$rTotals['side_ds'] += $specials[$tMID]['side_ds'];
 		$rTotals['side_dd'] += $specials[$tMID]['side_dd'];
 		$rTotals['side_fs'] +=  $specials[$tMID]['side_fs'];
 		$rTotals['side_gs'] += $specials[$tMID]['side_gs'];
-		$rTotals['side_pd'] += $specials[$tMID]['side_pd']; 
-		$rTotals['side_gz'] += $specials[$tMID]['side_gz']; 
-		$rTotals['side_vb'] +=  $specials[$tMID]['side_vb']; 
+		$rTotals['side_pd'] += $specials[$tMID]['side_pd'];
+		$rTotals['side_gz'] += $specials[$tMID]['side_gz'];
+		$rTotals['side_vb'] +=  $specials[$tMID]['side_vb'];
 		$rTotals['side_vz'] += $specials[$tMID]['side_vz'];
 		$RouteOut[$j]  = $specials[$tMID];
 		$RouteOut[$j]['label']  = $row['mLabel'];
@@ -217,7 +217,7 @@ if ($row['dType']=="R") {
 				$RouteOut[$j]['special'] = 1;
 			}
 		}
-		if ($RouteOut[$j]['special']  == 1) 
+		if ($RouteOut[$j]['special']  == 1)
 		$rTotals['special'] += $RouteOut[$j]['meals'];
 		$j++;
 		 }
@@ -292,24 +292,24 @@ if ($row['dType']=="R") {
 	                       }
 			}
 		}
-		if ($RouteOut[$j]['special']  == 1) 
+		if ($RouteOut[$j]['special']  == 1)
 		$rTotals['special'] += $RouteOut[$j]['meals'];
-		$j++;	
+		$j++;
 		}
 	} else {
 		//  client does not normally receive meals on this day
 		if ($specials[$tMID]['is'] == 1){
 			if ($specials[$tMID]['suspend'] != 1){
-			
+
 		$rTotals['no'] ++;
 		$rTotals['meals'] += $specials[$tMID]['meals'];
 		$rTotals['side_ds'] += $specials[$tMID]['side_ds'];
 		$rTotals['side_dd'] += $specials[$tMID]['side_dd'];
 		$rTotals['side_fs'] +=  $specials[$tMID]['side_fs'];
 		$rTotals['side_gs'] += $specials[$tMID]['side_gs'];
-		$rTotals['side_pd'] += $specials[$tMID]['side_pd']; 
-		$rTotals['side_gz'] += $specials[$tMID]['side_gz']; 
-		$rTotals['side_vb'] +=  $specials[$tMID]['side_vb']; 
+		$rTotals['side_pd'] += $specials[$tMID]['side_pd'];
+		$rTotals['side_gz'] += $specials[$tMID]['side_gz'];
+		$rTotals['side_vb'] +=  $specials[$tMID]['side_vb'];
 		$rTotals['side_vz'] += $specials[$tMID]['side_vz'];
 		$RouteOut[$j]  = $specials[$tMID];
 		$RouteOut[$j]['label']  = $row['mLabel'];
@@ -338,7 +338,7 @@ if ($row['dType']=="R") {
 				$RouteOut[$j]['special'] = 1;
 			}
 		}
-		if ($RouteOut[$j]['special']  == 1) 
+		if ($RouteOut[$j]['special']  == 1)
 		$rTotals['special'] += $RouteOut[$j]['meals'];
 		$j++;
 		}
@@ -356,9 +356,9 @@ if ($row['dType']=="R") {
 		$rTotals['side_dd'] += $specials[$tMID]['side_dd'];
 		$rTotals['side_fs'] +=  $specials[$tMID]['side_fs'];
 		$rTotals['side_gs'] += $specials[$tMID]['side_gs'];
-		$rTotals['side_pd'] += $specials[$tMID]['side_pd']; 
-		$rTotals['side_gz'] += $specials[$tMID]['side_gz']; 
-		$rTotals['side_vb'] +=  $specials[$tMID]['side_vb']; 
+		$rTotals['side_pd'] += $specials[$tMID]['side_pd'];
+		$rTotals['side_gz'] += $specials[$tMID]['side_gz'];
+		$rTotals['side_vb'] +=  $specials[$tMID]['side_vb'];
 		$rTotals['side_vz'] += $specials[$tMID]['side_vz'];
 		$RouteOut[$j]  = $specials[$tMID];
 		$RouteOut[$j]['label']  = $row['mLabel'];
@@ -387,10 +387,10 @@ if ($row['dType']=="R") {
 				$RouteOut[$j]['special'] = 1;
 			}
 		}
-		if ($RouteOut[$j]['special']  == 1) 
+		if ($RouteOut[$j]['special']  == 1)
 		$rTotals['special'] += $RouteOut[$j]['meals'];
 		$j++;
-		
+
 
  }
 }
@@ -452,7 +452,7 @@ $strSideNo .= $rTotals['side_vb'] . $cReturn;
 $strSide .= "Repas / Meals" . $cReturn;
 $strSideNo .= $rTotals['meals'];
 // add a page
-$pdf->startPageGroup(); 
+$pdf->startPageGroup();
 $pdf->AddPage();
 
 
@@ -464,7 +464,7 @@ $pdf->AddPage();
 //}
 $pdf->SetCellPadding(1);
 //MultiCell($w, $h, $txt, $border=0, $align='J', $fill=0, $ln=1, $x='', $y='', $reseth=true, $stretch=0)
-  
+
 $pdf->SetFont('helvetica', 'I', 11);
 $pdf->MultiCell(50, 2, 'Component Counts', 0, 'L', 0, 1);
 $pdf->SetFont('helvetica', '', 9);
@@ -505,7 +505,7 @@ $row = mysql_fetch_array( $result );
 	$m_spec=$RouteOut[$i]['meals'];
 	switch($RouteOut[$i]['portionsize']) {
 	 case "D":
-	$m_spec .= " double"; 
+	$m_spec .= " double";
 	break;
 	 case "L":
         $m_spec .= " large";
@@ -539,6 +539,6 @@ $pdf->lastPage();
 $pdf->Output('kitchcount.pdf', 'I');
 
 //============================================================+
-// END OF FILE                                                 
+// END OF FILE
 //============================================================+
 ?>

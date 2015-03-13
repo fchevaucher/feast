@@ -1,18 +1,18 @@
 <?php
 session_start();
 
-if (isset($_SESSION['f_user'])) { 
+if (isset($_SESSION['f_user'])) {
 	//load MySQL Access
 	include '../../include/config/mysql_login.php';
-	mysql_connect("localhost", $mysqluser, $mysqlpass);
+	mysql_connect(MYSQL_HOST, $mysqluser, $mysqlpass);
 	mysql_select_db("mowdata");
 
 	$query = "SELECT * FROM mowdata.usr_settings WHERE usrname='" .	mysql_real_escape_string($_SESSION['f_user']) . "'";
 	$result = mysql_query($query) or die("Was unabled to find user data.");
 	if(!($usr_settings = mysql_fetch_array($result))){
-		echo '<ul><li><div style="padding:4px; 
+		echo '<ul><li><div style="padding:4px;
 
-		margin:0;border:0;">Disabled. <small>Incorrect login 
+		margin:0;border:0;">Disabled. <small>Incorrect login
 		credentials.</small></div></li></ul>';
 		exit;
 	}
@@ -26,7 +26,7 @@ if (isset($_SESSION['f_user'])) {
 	$SQL_FROM = 'member';
 	$SQL_WHERE = 'f_name';
 
-	
+
 	$hits = 0;
 	$searchq = strip_tags($_GET['q']);
 
@@ -88,7 +88,7 @@ echo $row['last_name'];
                         ?> <small><?php
                         echo $row['last_name'];
                         ?></small></a></li>
-                        <?php } 
+                        <?php }
                 }
 
 
@@ -160,20 +160,20 @@ echo $row['first_name'];
         //end accents
 
 	if ($hits == 0)
-	echo '<li><div style="padding:4px; margin:0; border:0;"><small><i>' . $aj_nores . '..</i></small></div></li>'; 
+	echo '<li><div style="padding:4px; margin:0; border:0;"><small><i>' . $aj_nores . '..</i></small></div></li>';
 
 	echo '</ul>';
 
-	} 
+	}
 
 //end authenticated user.
 } else {
-echo '<ul><li><div style="padding:4px; 
-margin:0;border:0;">Disabled. <small>Incorrect login 
+echo '<ul><li><div style="padding:4px;
+margin:0;border:0;">Disabled. <small>Incorrect login
 credentials.</small></div></li></ul>';
 }
 } else {
-echo '<ul><li><div style="padding:4px; margin:0; 
-border:0;">Disabled. <small>Incorrect login 
+echo '<ul><li><div style="padding:4px; margin:0;
+border:0;">Disabled. <small>Incorrect login
 credentials.</small></div></li></ul>';
 } ?>

@@ -1,7 +1,7 @@
 <?php
 // Make a MySQL Connection
 //include '../include/config/mysql_login.php';
-//mysql_connect("localhost", $mysqluser, $mysqlpass) or die(mysql_error());
+//mysql_connect(MYSQL_HOST, $mysqluser, $mysqlpass) or die(mysql_error());
 //mysql_select_db("mowdata") or die(mysql_error());
 function chkBillingTable($month,$year){
 	mysql_select_db("mowbilling") or die(mysql_error());

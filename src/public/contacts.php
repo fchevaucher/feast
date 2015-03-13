@@ -4,16 +4,16 @@
 
 include './gsession.php';
 if (isset($_GET['rid'])){
-	
+
 	$cRid = $_GET['rid'];
 	$cMid = 0;
 	if (isset($_GET['mid']))
 			$cMid = $_GET['mid'];
 	//setup mysql vars
 	include '../include/config/mysql_login.php';
-	mysql_connect("localhost", $mysqluser, $mysqlpass);
+	mysql_connect(MYSQL_HOST, $mysqluser, $mysqlpass);
 	mysql_select_db("mowdata");
-		
+
 	//save changes
 	if(isset($_POST['relf_name'])) {
 		switch ($_POST['slctRel']) {
@@ -35,7 +35,7 @@ if (isset($_GET['rid'])){
         $cPhoneA = $_POST['phone1'] . str_replace("-","",$_POST['phone2']);
         $cPhoneB = $_POST['phoneb1'] . str_replace("-","",$_POST['phoneb2']);
 		$cPhoneC = $_POST['phonec1'] . str_replace("-","",$_POST['phonec2']);
-        
+
 		$query = "UPDATE mowdata.contacts SET first_name = '" . trim($_POST['relf_name']);
 		$query .= "', last_name = '" . trim($_POST['rell_name']) . "',relate = '" . $_POST['slctRel'];
 		$query .= "',prof = '" .$isProf  . "', organ = '" .$_POST['relorg']  . "', address1 = '" .$_POST['add1'];
@@ -44,9 +44,9 @@ if (isset($_GET['rid'])){
 		$query .= "', phone2 = '" . $cPhoneB . "', phone3 = '" . $cPhoneC . "', phone3ext = '";
 		$query .= $_POST['phonec3'] . "', editor = '" . $f_user . "' WHERE rid = " . $cRid ;
 		mysql_query($query)  or die(mysql_error());
-		
+
 		//update member info if present
-		
+
 		if (isset($_GET['mid'])) {
 			$emrg = 0;
 			if(isset($_POST["rel_emrg"]))
@@ -54,7 +54,7 @@ if (isset($_GET['rid'])){
 			$refr = 0;
 			if(isset($_POST["rel_refr"]))
 				$refr = 1;
-	
+
 			$query = "UPDATE mowdata.client_relationships SET emerge='" . $emrg . "',refer='" . $refr . "',editor ='" . $f_user .  "' WHERE mid='" . $cMid . "' AND rid='" . $cRid . "'";
 			mysql_query($query)  or die(mysql_error());
 		}
@@ -76,19 +76,19 @@ if (isset($_GET['rid'])){
 <center><br /><div style="padding: 15px 5px 0 5px; color:#fff; font-size:12px;">changes to entry for contact<b> <br /><?php echo $_POST['relf_name'] . " " . $_POST['rell_name']; ?> </b>were saved.</b></div><br /><input type="button" value="ok" onClick="window.open('client.php<?php echo "?do=show&spec=relate&mid=" . $cMid; ?>', '_self', ''); return false; " /></center></td>
 <td style="width:101px;background: url(img/alertright.gif);">&nbsp;</td></tr>
 </table></div></center>
-</body></html><?php 
+</body></html><?php
 		} else {
-		
+
 			//setup to make changes
 			$query = "SELECT * FROM mowdata.contacts WHERE rid='" . $cRid ."'";
 			$result = mysql_query($query)  or die(mysql_error());
 			$row = mysql_fetch_array($result);
-		
+
 			//define empty vars for select tag
 			$r_list = array(0 => "case worker","nurse","dietician","physiotherapist","doctor","next of kin","husband","grandchild","wife","mother","father","brother","sister","friend","guardian","daughter","son","bill-to");
-			
+
 			$rno = count($r_list);
-			
+
 			$phone1a = substr($row['phone1'],0,3);
 			$phone1b= "";
 			if (strlen($row['phone1'] > 3))
@@ -102,8 +102,8 @@ if (isset($_GET['rid'])){
 			if (strlen($row['phone3'] > 3))
 				$phone3b= substr($row['phone3'],3);
 			$phone3ext = $row['phone3ext'];
-					
-			
+
+
 		switch ($row['relate']) {
 			case "case worker":
 			case "nurse":
@@ -115,7 +115,7 @@ if (isset($_GET['rid'])){
 				break;
 			default:
 				$isProf = 0;
-		}	
+		}
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head><title>FeastDB - Fireboy Technologies</title><meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
@@ -173,11 +173,11 @@ echo "display:none;"; ?> padding-bottom: 2px;"><input class="i2" name="phone1" m
 
 </td></tr><tr><td colspan="2"><br/><?php
 			if (isset($_GET['mid'])) {
-				
+
 			//get emergency contact/refferal status
 			$e_check = "";
 			$r_check = "";
-			
+
 			$query = "SELECT * FROM mowdata.client_relationships WHERE mid='" . $cMid . "' AND rid='" . $cRid ."'";
 			$result = mysql_query($query)  or die(mysql_error());
 			$member = mysql_fetch_array($result);
@@ -185,15 +185,15 @@ echo "display:none;"; ?> padding-bottom: 2px;"><input class="i2" name="phone1" m
 				$e_check=" checked=\"checked\"";
 			if ($member['refer'] == 1)
 				$r_check=" checked=\"checked\"";
-			
+
 			//get member name
 			$query = "SELECT * FROM mowdata.member WHERE mid='" . $cMid ."'";
 			$result = mysql_query($query)  or die(mysql_error());
 			$member = mysql_fetch_array($result);
-			
-		
-echo "The following information is specific to " . $row['first_name'] . "  " . $row['last_name'] . "'s relationship with <b>" .  $member['first_name'] . "  " .$member['last_name']  .  "</b>:<br />"; 
-?>&nbsp;&nbsp;&nbsp;&nbsp;<input name="rel_refr" class="chkbx" style="padding-left: 10px;" 
+
+
+echo "The following information is specific to " . $row['first_name'] . "  " . $row['last_name'] . "'s relationship with <b>" .  $member['first_name'] . "  " .$member['last_name']  .  "</b>:<br />";
+?>&nbsp;&nbsp;&nbsp;&nbsp;<input name="rel_refr" class="chkbx" style="padding-left: 10px;"
 type="checkbox" value="1"<?php echo $r_check; ?> />&nbsp;Referring&nbsp;Party&nbsp;&nbsp;&nbsp;&nbsp;<input name="rel_emrg" class="chkbx" value="1"
 type="checkbox"<?php echo $e_check; ?> />&nbsp;Emergency&nbsp;Contact<br /><br />
 <?php

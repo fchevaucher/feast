@@ -11,7 +11,7 @@ include './gsession.php';
 
 $panel=array();
 $panel['currentdb'] = "client";
-$panel['showbranches'] = FALSE; 
+$panel['showbranches'] = FALSE;
 
   //function for sorting
 	function cmp($a, $b){
@@ -27,7 +27,7 @@ else {
 	}
 
 include '../include/config/mysql_login.php';
-mysql_connect("localhost", $mysqluser, $mysqlpass);
+mysql_connect(MYSQL_HOST, $mysqluser, $mysqlpass);
 require_once('../public/tcpdf/config/lang/eng.php');
 require_once('../public/tcpdf/tcpdf.php');
 $output = "";
@@ -76,7 +76,7 @@ while($row = mysql_fetch_array( $result )){
 	if($row['mSize'] == 'D')
 		$orders[$tMID]['doubles'] += $row['mNumber'];
 	$orders[$tMID]['newspapers'] += $row['mSidegz'];
-	$orders[$tMID]['veggiebaskets'] += $row['mSidevb']; 
+	$orders[$tMID]['veggiebaskets'] += $row['mSidevb'];
 	$orders[$tMID]['payscale'] = $row['payscale'];
 }
 
@@ -87,27 +87,27 @@ uasort($orders, 'cmp');
 $cReturn = "\n";
 
 // extend TCPF with custom functions
-class MYPDF extends TCPDF { 
+class MYPDF extends TCPDF {
     public function MultiRow($left, $right) {
         //MultiCell($w, $h, $txt, $border=0, $align='J', $fill=0, $ln=1, $x='', $y='', $reseth=true, $stretch=0)
-        
+
         $page_start = $this->getPage();
         $y_start = $this->GetY();
-        
+
         // write the left cell
         $this->MultiCell(40, 0, $left, 0, 'R', 0, 2, '', '', true, 0);
-        
+
         $page_end_1 = $this->getPage();
         $y_end_1 = $this->GetY();
-        
+
         $this->setPage($page_start);
-        
+
         // write the right cell
         $this->MultiCell(0, 0, $right, 0, 'J', 0, 1, $this->GetX() ,$y_start, true, 0);
-        
+
         $page_end_2 = $this->getPage();
         $y_end_2 = $this->GetY();
-        
+
         // set the new row position by case
         if (max($page_end_1,$page_end_2) == $page_start) {
             $ynew = max($y_end_1, $y_end_2);
@@ -118,11 +118,11 @@ class MYPDF extends TCPDF {
         } else {
             $ynew = $y_end_2;
         }
-        
+
         $this->setPage(max($page_end_1,$page_end_2));
         $this->SetXY($this->GetX(),$ynew);
     }
-    
+
 }
 
 $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, 'Letter', true, 'UTF-8', false);
@@ -164,7 +164,7 @@ $pdf->setLanguageArray($l);
 $pdf->SetFont('helvetica', '', 12);
 
   include '../include/config/mysql_login.php';
-  mysql_connect("localhost", $mysqluser, $mysqlpass);
+  mysql_connect(MYSQL_HOST, $mysqluser, $mysqlpass);
   mysql_select_db("mowdata");
 
 
@@ -188,7 +188,7 @@ $global_total = 0.0;
 
 // ---------------------------------------------------------
 // add a page
-$pdf->startPageGroup(); 
+$pdf->startPageGroup();
 $pdf->AddPage();
 
 
@@ -200,10 +200,10 @@ $pdf->AddPage();
 //}
 $pdf->SetCellPadding(1);
 //MultiCell($w, $h, $txt, $border=0, $align='J', $fill=0, $ln=1, $x='', $y='', $reseth=true, $stretch=0)
-  
+
 $pdf->SetFont('helvetica', 'B', 20);
-$pdf->Cell(0, 6, " ", 0, 1, 'C');     
-$pdf->Cell(0, 12, "Billing Summary", 0, 1, 'C');     
+$pdf->Cell(0, 6, " ", 0, 1, 'C');
+$pdf->Cell(0, 12, "Billing Summary", 0, 1, 'C');
 $pdf->SetFont('helvetica', '', 12);
 $pdf->Cell(0, 7, 'Deliveries between ' . date('F jS',strtotime($first_day['date'])) . ' and ' . date('F jS, Y',strtotime($last_day['date'])), 0, 1, 'C');
 $pdf->SetFont('helvetica', 'I', 11);
@@ -272,7 +272,7 @@ $pdf->lastPage();
 $pdf->Output('billing' . $_POST['month'] . '.pdf', 'I');
 
 //============================================================+
-// END OF FILE                                                 
+// END OF FILE
 //============================================================+
 
 }

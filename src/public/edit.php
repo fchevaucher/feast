@@ -7,11 +7,11 @@ if(isset($_GET['client'])){
 if ($_GET['client']=="del") {
 	$cMid = $_GET['mid'];
 	$rid_to_del = 0;
-	if (strlen($_GET['rid']) > 1) 
+	if (strlen($_GET['rid']) > 1)
 	$rid_to_del = $_GET['rid'];
 	  include '../include/config/mysql_login.php';
 
-  mysql_connect("localhost", $mysqluser, $mysqlpass);
+  mysql_connect(MYSQL_HOST, $mysqluser, $mysqlpass);
   mysql_select_db("mowdata");
 	$query = "DELETE from client_relationships WHERE mid='" . $cMid . "' and rid='" . $rid_to_del ."'";
 	mysql_query($query)  or die(mysql_error());
@@ -25,7 +25,7 @@ include "../include/client/cnewrelat1.php";
 } else {
 echo "An error has occured.";
 }
-} elseif(isset($_GET['change'])){ 
+} elseif(isset($_GET['change'])){
 $cMid = $_GET['mid'];
 $mstatus = "A";
 if($_GET['change'] == "status"){
@@ -34,7 +34,7 @@ if($_GET['change'] == "status"){
 	$mstatus = $_POST['newstatus'];
 	}
 	  include '../include/config/mysql_login.php';
-  mysql_connect("localhost", $mysqluser, $mysqlpass);
+  mysql_connect(MYSQL_HOST, $mysqluser, $mysqlpass);
   mysql_select_db("mowdata");
 $query = "UPDATE client SET mealstatus='" . $mstatus . "' WHERE mid='" . $cMid ."'";
 mysql_query($query)  or die(mysql_error());
@@ -44,7 +44,7 @@ mysql_query($query)  or die(mysql_error());
         $newroute = $_POST['newroute'];
         }
           include '../include/config/mysql_login.php';
-  mysql_connect("localhost", $mysqluser, $mysqlpass);
+  mysql_connect(MYSQL_HOST, $mysqluser, $mysqlpass);
   mysql_select_db("mowdata");
 $query = "UPDATE client SET dRoute='" . $newroute . "' WHERE mid='" . $cMid ."'";
 mysql_query($query)  or die(mysql_error());
@@ -55,7 +55,7 @@ mysql_query($query)  or die(mysql_error());
 	$mstatus = $_POST['newdtype'];
 //	}
 	  include '../include/config/mysql_login.php';
-  mysql_connect("localhost", $mysqluser, $mysqlpass);
+  mysql_connect(MYSQL_HOST, $mysqluser, $mysqlpass);
   mysql_select_db("mowdata");
 $query = "UPDATE client SET dType='" . $mstatus . "' WHERE mid='" . $cMid ."'";
 mysql_query($query)  or die(mysql_error());
@@ -64,7 +64,7 @@ mysql_query($query)  or die(mysql_error());
 	$direct = $_POST['newdirect'];
 
 	  include '../include/config/mysql_login.php';
-  mysql_connect("localhost", $mysqluser, $mysqlpass);
+  mysql_connect(MYSQL_HOST, $mysqluser, $mysqlpass);
   mysql_select_db("mowdata");
 $query = "UPDATE client SET dDirections='" . mysql_real_escape_string($direct) . "' WHERE mid='" . $cMid ."'";
 mysql_query($query)  or die(mysql_error());
@@ -78,7 +78,7 @@ die('error');
 $cSpec = $_GET['spec'];
 
   include '../include/config/mysql_login.php';
-  mysql_connect("localhost", $mysqluser, $mysqlpass);
+  mysql_connect(MYSQL_HOST, $mysqluser, $mysqlpass);
   mysql_select_db("mowdata");
   if ($cSpec == "home") {
 	if (isset($_POST['email']))
@@ -94,7 +94,7 @@ $cSpec = $_GET['spec'];
 
 	//update the client to member database
 	mysql_query($query)  or die(mysql_error());
-  
+
   } elseif ($cSpec == "meal") {
 
 		//prepare certain variables
@@ -104,7 +104,7 @@ $cSpec = $_GET['spec'];
 		if ($_POST['dietr_i5'] == "1")
 		$diDairy = 1;
 
-		//prepare query 
+		//prepare query
 		$query = "UPDATE client SET mPortion='" . $_POST['dportion'] . "', mMealmod_cut='" . $_POST['dietr_pr1'] . "', mMealmod_dat='" . $_POST['dietr_pr3'] . "', ";
 		$query .= "mMealmod_pur='" . $_POST['dietr_pr2'] . "', mMealallergy='" . $_POST['dAllergy'] . "', mMealdiabete='" . $_POST['dDiabetic'] . "', mDiet_salt='" . $_POST['dietr_i1'] . "', ";
 		$query .= "mDiet_milk='" . $diDairy . "', mDiet_fish='" . $_POST['dietr_i16'] . "', mDiet_ham='" . $_POST['dietr_i12'] . "', mDiet_poul='" . $_POST['dietr_i11'] . "', ";
@@ -150,14 +150,14 @@ $cSpec = $_GET['spec'];
 	$query .=  "','" .  $isProf . "','"  . $_POST['relorg'] . "','";
 	$query .= $_POST['add1'] . "','" . $_POST['add2'] . "','" . $_POST['city'] . "','" . $_POST['prov'] . "','" . $_POST['post'];
 	$query .= "','" . $psemail . "','" . $cPhoneA . "','" . $cPhoneB . "','" . $cPhoneC . "','" . $_POST['phonec3'] . "','" . $f_user . "')";
-	
+
 	//save and get the rid
 	mysql_query($query)  or die(mysql_error());
 	$query = "SELECT MAX(rid) AS rid FROM contacts";
 	$result = mysql_query($query) or die(mysql_error());
 	$rid ="";
 	$row = mysql_fetch_array($result);
-	$rid = $row['rid'] ;	
+	$rid = $row['rid'] ;
 
 	//check if contact is the emergency contact/refering party
 	$emrg = 0;
@@ -166,10 +166,10 @@ $cSpec = $_GET['spec'];
 	$refr = 0;
 	if(isset($_POST["rel_refr"]))
 		$refr = 1;
-	
+
 	$query = "INSERT INTO client_relationships (mid,rid,emerge,refer,editor) Values (";
 	$query .= $_GET['mid'] . "," . $rid . "," . $emrg . "," . $refr . ",'" . $f_user .  "')";
-	
+
      }
 	 //add the entry
        mysql_query($query)  or die(mysql_error());
@@ -182,12 +182,12 @@ $cSpec = $_GET['spec'];
 	mysql_query($query)  or die(mysql_error());
 	}
 } elseif ($cSpec == "refer") {
-	
-	
-	
+
+
+
 	$bTo= $_POST['billTo'];
 	$cMid = $_GET['mid'];
-	
+
 	//set all relationships billto to false
 	$query = "UPDATE client_relationships SET billto='1' WHERE mid = '" . $cMid . "' and billto='1'";
 	$result = mysql_query($query);
@@ -228,10 +228,10 @@ $ext = $_POST['ext'];
 } elseif  ($bTo != "slf") {
 	$relno = substr($bTo,1);
 			$query = "UPDATE client_relationships SET billto='1' WHERE mid='" . $cMid . "' AND rid='" . $relno . "'";
-        //add the entry 
+        //add the entry
 	mysql_query($query)  or die(mysql_error());
-	
-}  
+
+}
 $query = "UPDATE client_billing SET billto='" .  $bTo. "',
 accountno='". $account . "',
 authno='". $authno . "',
@@ -271,9 +271,9 @@ $mSuspend = 0;
 for ($i = 0; $i <= 9; $i++){
 if ($_POST['skip' . $i] != "skip"){
 	if ($_POST['slct' . $i] == "sd"){
-	$mSide[$_POST['dsh' . $i]] = $_POST['nosd' . $i]; 
+	$mSide[$_POST['dsh' . $i]] = $_POST['nosd' . $i];
 	} else {
-	$mSide[$_POST['slct' . $i]] = $_POST['nosd' . $i]; 
+	$mSide[$_POST['slct' . $i]] = $_POST['nosd' . $i];
 	}
 }
 }
@@ -288,7 +288,7 @@ if ($_POST['ismeal'] == "meal") {
 	}
 
 	while($row = mysql_fetch_array( $result )) {
-	 if ($row['mDate'] == $_POST['mDay']) 
+	 if ($row['mDate'] == $_POST['mDay'])
 	$dayExist = 1;
 	 }
 

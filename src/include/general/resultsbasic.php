@@ -1,4 +1,4 @@
-<?php include "gtop1.php"; 
+<?php include "gtop1.php";
 
 $volchk = "";
 $clientchk = "";
@@ -26,11 +26,11 @@ if($_POST['qstyle'] == "phone"){
  $qphone = " selected=\"selected\"";
 } elseif($_POST['qstyle'] == "address"){
  $qaddress = " selected=\"selected\"";
-} 
+}
 
 ?></div><br /><br />
-<div id="fn" class="w8"><form autocomplete="off" name="mowquery" method="post" action="search.php?do=now"><table 
-width="100%" 
+<div id="fn" class="w8"><form autocomplete="off" name="mowquery" method="post" action="search.php?do=now"><table
+width="100%"
 border="0" cellpadding="0" cellspacing="0"><tr style="height:20px"><td class="ll" colspan="3">&nbsp;</td><td class="mg">&nbsp;</td>
 <td class="rr" rowspan="3">Find members:<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="vol" value="1"<?php echo $volchk;?> id="chkvol" />&nbsp;&nbsp;<label for="chkvol">Volunteers</label>
@@ -47,7 +47,7 @@ border="0" cellpadding="0" cellspacing="0"><tr style="height:20px"><td class="ll
 <tr><td><img src="p1/apup.gif" width="161" height="74" border="0" alt="" /></td><td valign="top">&nbsp;</td><td class="rt"><img src="p1/fdbgr.gif" width="110" height="44" border="0" alt="" /></td><td class="mg">&nbsp;</td></tr></table></form></div><div id="sep" class="w8">&nbsp;</div>
 <div id="cn" class="w8"><div style="width:700px"><img src="p1/aplo.gif" width="164" height="66" border="0" alt="" /><div style="float:right;padding:15px 30px 0 0; width:450px;text-align:left;"><?php
 	include '/var/www/include/config/mysql_login.php';
-	mysql_connect("localhost", $mysqluser, $mysqlpass);
+	mysql_connect(MYSQL_HOST, $mysqluser, $mysqlpass);
 	mysql_select_db("mowdata");
 
 

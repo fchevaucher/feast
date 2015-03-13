@@ -40,7 +40,7 @@ header("Content-Disposition:inline;filename=touchbase.csv");
 	$Tue['NDG'] = 0;
 	$Tue['CV'] = 0;
 	$Tue['WM'] = 0;
-	
+
 	$Wed = array();
 	$Wed['CS'] = 0;
 	$Wed['CDN'] = 0;
@@ -50,7 +50,7 @@ header("Content-Disposition:inline;filename=touchbase.csv");
 	$Wed['NDG'] = 0;
 	$Wed['CV'] = 0;
 	$Wed['WM'] = 0;
-	
+
 	$Thu = array();
 	$Thu['CS'] = 0;
 	$Thu['CDN'] = 0;
@@ -60,7 +60,7 @@ header("Content-Disposition:inline;filename=touchbase.csv");
 	$Thu['NDG'] = 0;
 	$Thu['CV'] = 0;
 	$Thu['WM'] = 0;
-	
+
 	$Fri = array();
 	$Fri['CS'] = 0;
 	$Fri['CDN'] = 0;
@@ -70,7 +70,7 @@ header("Content-Disposition:inline;filename=touchbase.csv");
 	$Fri['NDG'] = 0;
 	$Fri['CV'] = 0;
 	$Fri['WM'] = 0;
-	
+
 	$Sat = array();
 	$Sat['CS'] = 0;
 	$Sat['CDN'] = 0;
@@ -80,11 +80,11 @@ header("Content-Disposition:inline;filename=touchbase.csv");
 	$Sat['NDG'] = 0;
 	$Sat['CV'] = 0;
 	$Sat['WM'] = 0;
-	
+
 
 //setup mysql access
 	include '../include/config/mysql_login.php';
-	mysql_connect("localhost", $mysqluser, $mysqlpass);
+	mysql_connect(MYSQL_HOST, $mysqluser, $mysqlpass);
 	mysql_select_db("mowdata");
 //find active clients on this route
 	$query = "SELECT * FROM mowdata.client WHERE mealstatus= 'A'";
@@ -126,7 +126,7 @@ header("Content-Disposition:inline;filename=touchbase.csv");
                         $people[$tmid]['Fri']=$person['dFriNumber'];
                 if ($row['dSat'])
                         $people[$tmid]['Sat']=$person['dSatNumber'];
-	
+
 	}
 	//sort the array alphabetically by last name
 	uasort($people, 'cmp');
@@ -215,6 +215,6 @@ header("Content-Disposition:inline;filename=touchbase.csv");
 		}
 		echo ",,,,,,,,," . $newline;
 		echo "Total Clients," . $count[$dlet] . ",Ongoing Totals(by Day),," . $Mon[$dlet] . "," . $Tue[$dlet] . "," . $Wed[$dlet] . "," . $Thu[$dlet] . "," . $Fri[$dlet] . "," . $Sat[$dlet] . $newline;
-		
+
 }
 ?>

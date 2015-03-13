@@ -1,4 +1,4 @@
-<?php 
+<?php
 /*ini_set('display_errors', 1);
 ini_set('log_errors', 1);
 ini_set('error_log', dirname(__FILE__) . '/error_log.txt');
@@ -8,7 +8,7 @@ include './gsession.php';
 
 $panel=array();
 $panel['currentdb'] = "client";
-$panel['showbranches'] = FALSE; 
+$panel['showbranches'] = FALSE;
 
 if (!isset($_GET['do']))
 	$_GET['do'] = "";
@@ -50,10 +50,10 @@ if(isset($_GET['display'])) {  //function for sorting
 	$Thu = 0;
 	$Fri = 0;
 	$Sat = 0;
-	
+
 	//setup mysql access
 	include '../include/config/mysql_login.php';
-	mysql_connect("localhost", $mysqluser, $mysqlpass);
+	mysql_connect(MYSQL_HOST, $mysqluser, $mysqlpass);
 	mysql_select_db("mowdata");
 
 	//find active clients on this route
@@ -80,7 +80,7 @@ if(isset($_GET['display'])) {  //function for sorting
 		$people[$tmid]['Thu'] = $row['dThu'];
 		$people[$tmid]['Fri'] = $row['dFri'];
 		$people[$tmid]['Sat'] = $row['dSat'];
-	
+
 		$q2 = "SELECT * FROM mowdata.meals_default WHERE mid=" . $row['mid'] ;
 		$r2 = mysql_query($q2);
                 $person = mysql_fetch_array( $r2 );
@@ -160,7 +160,7 @@ if(isset($_GET['display'])) {  //function for sorting
 				echo "</td><td>";
 				//if($people[$key]['Thu'])
 				//	echo $people[$key]['Thu'];
-				echo "&nbsp;";			
+				echo "&nbsp;";
 				echo "</td><td style=\"width:35px;background:#EEE\">";
 				if($people[$key]['Fri'])
 					echo $people[$key]['Fri'];
@@ -204,7 +204,7 @@ Select Route: <select name="route">
 ?>
  </div>
 <div id="screen"></div>
-</body></html><?php 
+</body></html><?php
 } else {
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
@@ -229,6 +229,6 @@ include "../include/general/gtop.php";
 &nbsp;&nbsp;&nbsp;<a href="reports.php?do=touchbase">Touch-Base</a><br />
   </div>
 <div id="screen"></div>
-</body></html><?php 
+</body></html><?php
 }
 ?>

@@ -5,7 +5,7 @@ header("Content-Disposition:inline;filename=bday_years.csv");
 
 //setup mysql access
 	include '../include/config/mysql_login.php';
-	mysql_connect("localhost", $mysqluser, $mysqlpass);
+	mysql_connect(MYSQL_HOST, $mysqluser, $mysqlpass);
 	mysql_select_db("mowdata");
 
 $clientlist = array();

@@ -6,6 +6,7 @@
 date_default_timezone_set('America/Montreal');
 
 session_start();
+include '../include/config/mysql_login.php';
 
 if (isset($_SESSION['f_user'])) {
 	//A session is already open. Authenticate the stated user.
@@ -16,7 +17,7 @@ if (isset($_SESSION['f_user'])) {
 
 	//load MySQL Access
 	include '/var/www/feastdb/include/config/mysql_login.php';
-	mysql_connect("localhost", $mysqluser, $mysqlpass);
+	mysql_connect(MYSQL_HOST, $mysqluser, $mysqlpass);
 	mysql_select_db("mowdata");
 
 	$query = "SELECT * FROM mowdata.usr_settings WHERE usrname='" .	mysql_real_escape_string($_SESSION['f_user']) . "'";
@@ -42,7 +43,7 @@ if (isset($_SESSION['f_user'])) {
 
 	//load MySQL Access
 	include '/var/www/feastdb/include/config/mysql_login.php';
-	mysql_connect("localhost", $mysqluser, $mysqlpass);
+	mysql_connect(MYSQL_HOST, $mysqluser, $mysqlpass);
 	mysql_select_db("mowdata");
 
 	$query = "SELECT * FROM mowdata.usr_settings WHERE usrname='" .	mysql_real_escape_string($_POST['f_user']) . "'";
@@ -81,7 +82,7 @@ if (isset($_SESSION['f_user'])) {
 <center>
 <div id="center"><div id="idgroup"><div style="float:left; margin: 0;width:273px; height:138px;background: url(img/alertleft.gif)"><div id="infoalign"><form action="index.php" method="post">
 <div id="sur"><input type="text" name="f_user" tabindex="1" value="" class="txt"><input type="password" tabindex="2" name="f_pwrd" class="txt"><br /><br />
-<input type="submit" value="login" /></form></div></div><div style="float:left; margin: 0;width:101px; height:138px;background: 
+<input type="submit" value="login" /></form></div></div><div style="float:left; margin: 0;width:101px; height:138px;background:
 url(img/alertright.gif)"> </div></div>
 </div></center>
 <!-- Following tag included for uptime monitoring -->

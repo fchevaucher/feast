@@ -22,27 +22,27 @@ for ($i = 1; $i < 16; $i++) {
 
 
 // extend TCPF with custom functions
-class MYPDF extends TCPDF { 
+class MYPDF extends TCPDF {
     public function MultiRow($left, $right) {
         //MultiCell($w, $h, $txt, $border=0, $align='J', $fill=0, $ln=1, $x='', $y='', $reseth=true, $stretch=0)
-        
+
         $page_start = $this->getPage();
         $y_start = $this->GetY();
-        
+
         // write the left cell
         $this->MultiCell(40, 0, $left, 0, 'R', 0, 2, '', '', true, 0);
-        
+
         $page_end_1 = $this->getPage();
         $y_end_1 = $this->GetY();
-        
+
         $this->setPage($page_start);
-        
+
         // write the right cell
         $this->MultiCell(0, 0, $right, 0, 'J', 0, 1, $this->GetX() ,$y_start, true, 0);
-        
+
         $page_end_2 = $this->getPage();
         $y_end_2 = $this->GetY();
-        
+
         // set the new row position by case
         if (max($page_end_1,$page_end_2) == $page_start) {
             $ynew = max($y_end_1, $y_end_2);
@@ -53,11 +53,11 @@ class MYPDF extends TCPDF {
         } else {
             $ynew = $y_end_2;
         }
-        
+
         $this->setPage(max($page_end_1,$page_end_2));
         $this->SetXY($this->GetX(),$ynew);
     }
-    
+
 }
 
 $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
@@ -99,7 +99,7 @@ $pdf->setLanguageArray($l);
 $pdf->SetFont('helvetica', '', 12);
 
   include '../include/config/mysql_login.php';
-  mysql_connect("localhost", $mysqluser, $mysqlpass);
+  mysql_connect(MYSQL_HOST, $mysqluser, $mysqlpass);
   mysql_select_db("mowdata");
 
 
@@ -235,7 +235,7 @@ $result = mysql_query($query);
 
 	if(!($result))
 		die("There are no meals scheduled for delivery today.");
-		
+
 while($delivery = mysql_fetch_array( $result )) {
 	$tMID = $delivery['mid'];
 	$meals[$tMID]['is'] = 1;
@@ -301,7 +301,7 @@ while($delivery = mysql_fetch_array( $result )) {
 			$meals[$tMID]['special'] = 1;
 		}
 	}
-	if ($meals[$tMID]['special']  == 1) 
+	if ($meals[$tMID]['special']  == 1)
 		$rTotals[$rTmp]['special'] += $meals[$tMID]['meals'];
 	$j[$rTmp]++;
 	$i++;
@@ -385,7 +385,7 @@ $meals[$tMID]['address'] .= substr($row['phone'],0,3) . "-" . substr($row['phone
 	$w = 1;
 	else
 	$w = 2;
-	} else 
+	} else
 	$w = 1;
 	$spTot[$w] .= $row['last_name'];
 	$cntr += $meals[$tMID]['meals'];
@@ -431,7 +431,7 @@ $strSideNo .= $rTotals[$thsRoute]['side_vb'] . $cReturn;
 }
 $strMealNo = $rTotals[$thsRoute]['meals'];
 // add a page
-$pdf->startPageGroup(); 
+$pdf->startPageGroup();
 $pdf->AddPage();
 
 
@@ -443,7 +443,7 @@ $pdf->AddPage();
 //}
 $pdf->SetCellPadding(1);
 //MultiCell($w, $h, $txt, $border=0, $align='J', $fill=0, $ln=1, $x='', $y='', $reseth=true, $stretch=0)
-  
+
 $pdf->SetFont('helvetica', 'I', 11);
 $pdf->MultiCell(50, 2, 'Side Dishes', 0, 'L', 0, 0);
 $pdf->MultiCell(38, 2, 'Meals / Repas:' , 'B', 'L',0,0);
@@ -463,9 +463,9 @@ $y_end2 = $pdf->GetY();
 $pdf->MultiCell(0, 0, $spTot[2] , 0, 'L',  0,  1, 150, $y_start);
 $y_start = $pdf->GetY();
 if ($y_start < max($y_end,$y_end2))
-$pdf->SetXY($pdf->GetX(),max($y_end,$y_end2)); 
+$pdf->SetXY($pdf->GetX(),max($y_end,$y_end2));
 $pdf->SetFont('helvetica', '', 30);
-$pdf->Cell(0, 20, $hdRoute, 'T', 1, 'C');     
+$pdf->Cell(0, 20, $hdRoute, 'T', 1, 'C');
 $pdf->SetFont('helvetica', 'I', 10);
 $pdf->Cell(0, 0, ' - DEBUT DE LA ROUTE / START ROUTE -', 'T', 1, 'C');
 //sort the entries by stop
@@ -565,18 +565,18 @@ $pdf->MultiCell(100, 0, $meals[$key]['directions'], 0, 'L',  0,  2, $pdf->GetX()
 	$page_end_2 = $pdf->getPage();
 	$y_end_2 = $pdf->GetY();
 	$pdf->setPage($page_start);
-$pdf->MultiCell(34, 0, $strM , 0, 'L',  0,  2, $pdf->GetX() ,($y_start - $spOffset), true, 0); 
-$pdf->MultiCell(0, 0, $strNo , 0, 'L', 0 , 1, $pdf->GetX() ,($y_start - $spOffset), true, 0); 
+$pdf->MultiCell(34, 0, $strM , 0, 'L',  0,  2, $pdf->GetX() ,($y_start - $spOffset), true, 0);
+$pdf->MultiCell(0, 0, $strNo , 0, 'L', 0 , 1, $pdf->GetX() ,($y_start - $spOffset), true, 0);
 $page_end_3 = $pdf->getPage();
 $y_end_3 = $pdf->GetY();
-$pdf->SetXY($pdf->GetX(),max($y_end_1,$y_end_2,$y_end_3)); 
+$pdf->SetXY($pdf->GetX(),max($y_end_1,$y_end_2,$y_end_3));
 }
 //-----END GET NAME
 $pdf->Cell(0, 0, '-END OF ROUTE / FIN DE ROUTE-             Nombre d\'arrets / Number of Stops: '. $rTotals[$thsRoute]['no'] . '       ', 'T', 1, 'R');
 $thispageno = $pdf->getPage();
 if ($thispageno&1)
   $pdf->AddPage();
-  
+
 }
 
 // reset pointer to the last page
@@ -587,6 +587,6 @@ $pdf->lastPage();
 $pdf->Output('routesheets.pdf', 'I');
 
 //============================================================+
-// END OF FILE                                                 
+// END OF FILE
 //============================================================+
 ?>

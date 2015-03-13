@@ -1,8 +1,8 @@
 <?php
 
 ?></div><br /><br />
-<div id="fn" class="w8"><form autocomplete="off" name="mowquery"><table 
-width="100%" 
+<div id="fn" class="w8"><form autocomplete="off" name="mowquery"><table
+width="100%"
 border="0" cellpadding="0" cellspacing="0"><tr style="height:20px"><td class="ll" colspan="3">&nbsp;</td><td class="mg">&nbsp;</td>
 <td class="rr" rowspan="3">
 <ul style="list-style: none;">
@@ -27,9 +27,9 @@ $currentMonth = date('m');
 $gnobdays = 0;
 for ($i = 0; $i <= 6; $i++) {
 include '/var/www/feastdb/include/config/mysql_login.php';
-mysql_connect("localhost", $mysqluser, $mysqlpass);
+mysql_connect(MYSQL_HOST, $mysqluser, $mysqlpass);
 mysql_select_db("mowdata");
-$query = "SELECT * FROM client WHERE (mealstatus='A' or mealstatus='S') AND bday LIKE '%" . 
+$query = "SELECT * FROM client WHERE (mealstatus='A' or mealstatus='S') AND bday LIKE '%" .
 $currentMonth . "-" . $currentDay . "'";
 $result = mysql_query($query);
 //date w-day of the week
@@ -55,7 +55,7 @@ for ($j = 0;$j<$nobdays;$j++) {
 $query = "SELECT * FROM member WHERE mid = '" . $bdays[$j] . "'";
 $result = mysql_query($query);
 $row = mysql_fetch_array( $result );
-$boutput .= "&nbsp;&nbsp;<b>" . $row['first_name'] . " " .  
+$boutput .= "&nbsp;&nbsp;<b>" . $row['first_name'] . " " .
 $row['last_name'] . "</b><br />";
 }
 $currentDay ++;

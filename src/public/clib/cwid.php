@@ -1,10 +1,10 @@
 <?php
 session_start();
 
-if (isset($_SESSION['f_user'])) { 
+if (isset($_SESSION['f_user'])) {
 	//load MySQL Access
 	include '../../include/config/mysql_login.php';
-	mysql_connect("localhost", $mysqluser, $mysqlpass);
+	mysql_connect(MYSQL_HOST, $mysqluser, $mysqlpass);
 	mysql_select_db("mowdata");
 
 	$query = "SELECT * FROM mowdata.usr_settings WHERE usrname='" .	mysql_real_escape_string($_SESSION['f_user']) . "'";
@@ -25,7 +25,7 @@ if (isset($_SESSION['f_user'])) {
 		if($row['prof'] == 1) {
 			if($hits==0)
 				echo "<small>Did you mean: </small>";
-			else 
+			else
 				echo "<br />";
 			$hits++;
 			?><small><a href="edit.php?spec=relate&cwid=<?php echo $row['rid']; ?>&mid=<?php echo $_GET['cMid']; ?>"><?php
@@ -37,7 +37,7 @@ if (isset($_SESSION['f_user'])) {
 	//if ($hits == 0)
 
 	// end if strlen > 3
-		} 
+		}
 	}
 }
 ?>

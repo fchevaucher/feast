@@ -29,7 +29,7 @@ import fablib
 import fablib_docker
 
 PROJECT_NAME = 'feast'
-DB_NAME = 'feast'
+DB_NAME = 'mowdata'
 
 env.roledefs['local'] = ["local@local"]
 

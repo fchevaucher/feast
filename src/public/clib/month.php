@@ -1,10 +1,10 @@
 <?php
 session_start();
 
-if (isset($_SESSION['f_user'])) { 
+if (isset($_SESSION['f_user'])) {
 	//load MySQL Access
 	include '../../include/config/mysql_login.php';
-	mysql_connect("localhost", $mysqluser, $mysqlpass);
+	mysql_connect(MYSQL_HOST, $mysqluser, $mysqlpass);
 	mysql_select_db("mowdata");
 
 	$query = "SELECT * FROM mowdata.usr_settings WHERE usrname='" .	mysql_real_escape_string($_SESSION['f_user']) . "'";
@@ -36,66 +36,66 @@ $passWeek = "";
 if ($_GET['dMon'] > 0) {
   $wStyleM = " class=\"meal\"";
   $wCheckM = " checked=\"checked\"";
- $passWeek .= "&dMon=1";  
+ $passWeek .= "&dMon=1";
  }else {
   $wStyleM = "";
   $wCheckM = "";
- $passWeek .= "&dMon=0";  
+ $passWeek .= "&dMon=0";
  }
 if ($_GET['dTue'] > 0) {
   $wStyleT = " class=\"meal\"";
   $wCheckT = " checked=\"checked\"";
- $passWeek .= "&dTue=1";  
+ $passWeek .= "&dTue=1";
  }else {
   $wStyleT = "";
   $wCheckT = "";
- $passWeek .= "&dTue=0";  
+ $passWeek .= "&dTue=0";
  }
 if ($_GET['dWed'] > 0) {
   $wStyleW = " class=\"meal\"";
   $wCheckW = " checked=\"checked\"";
- $passWeek .= "&dWed=1";  
+ $passWeek .= "&dWed=1";
  }else {
   $wStyleW = "";
   $wCheckW = "";
- $passWeek .= "&dWed=0";  
+ $passWeek .= "&dWed=0";
  }
 if ($_GET['dThu'] > 0) {
   $wStyleR = " class=\"meal\"";
   $wCheckR = " checked=\"checked\"";
- $passWeek .= "&dThu=1";  
+ $passWeek .= "&dThu=1";
  }else {
   $wStyleR = "";
   $wCheckR = "";
- $passWeek .= "&dThu=0";  
+ $passWeek .= "&dThu=0";
  }
 if ($_GET['dFri'] > 0) {
   $wStyleF = " class=\"meal\"";
   $wCheckF = " checked=\"checked\"";
- $passWeek .= "&dFri=1";  
+ $passWeek .= "&dFri=1";
  }else {
   $wStyleF = "";
   $wCheckF = "";
- $passWeek .= "&dFri=0";  
+ $passWeek .= "&dFri=0";
  }
 if ($_GET['dSat'] > 0) {
   $wStyleS = " class=\"meal\"";
   $wCheckS = " checked=\"checked\"";
- $passWeek .= "&dSat=1";  
+ $passWeek .= "&dSat=1";
  }else {
   $wStyleS = "";
   $wCheckS = "";
- $passWeek .= "&dSat=0";  
+ $passWeek .= "&dSat=0";
  }
 }
 ?><table cellpadding="0" cellspacing="0" style="width:515px;border:0;padding:0;margin:0;"><tr><td style="width:180px;padding:0;text-align:left;height:38px;">
-<div class="clName"><?php echo date('F Y',$thisTimeStamp); ?>&nbsp;</div></td><td style="text-align:right;vertical-align:top;"><img 
+<div class="clName"><?php echo date('F Y',$thisTimeStamp); ?>&nbsp;</div></td><td style="text-align:right;vertical-align:top;"><img
 src="theme/default/fdbsm.gif" width="67" height="31" border="0" alt="FeastDB" /></td></tr></table>
 <table cellpadding="0" cellspacing="0" class="inpte">
 <tr><td><a href="javascript:void(0);" onclick="getdata('clib/month.php<?php
 echo "?cMid=" . $cMid . "&month=prv&thisMonth=" . $thisMonth . "&thisYear=" . $thisYear . "&dType=" . $cType . $passWeek;
 ?>','thsMonth');">&lt;</a></td><td><center><table cellpadding="0" cellspacing="1" class="month">
-<?php 
+<?php
 if ($cType == "R") {
 $chkAdd1 = "<input type=\"checkbox\" name=\"chk";
 $chkAdd2 = " onChange=\"updateMonth(";
@@ -198,7 +198,7 @@ $thisID = "d" . $thisVar . ($i+1);
  echo "<td class=\"gray\">&nbsp;</td>";
  }
 echo "</tr>";
-} 
+}
 ?></table></center>
 </td><td><a href="javascript:void(0);" onclick="getdata('clib/month.php<?php
 echo "?cMid=" . $cMid . "&month=nxt&thisMonth=" . $thisMonth . "&thisYear=" . $thisYear . "&dType=" . $cType . $passWeek;

@@ -16,27 +16,27 @@ for ($i = 1; $i < 16; $i++) {
 
 
 // extend TCPF with custom functions
-class MYPDF extends TCPDF { 
+class MYPDF extends TCPDF {
     public function MultiRow($left, $right) {
         //MultiCell($w, $h, $txt, $border=0, $align='J', $fill=0, $ln=1, $x='', $y='', $reseth=true, $stretch=0)
-        
+
         $page_start = $this->getPage();
         $y_start = $this->GetY();
-        
+
         // write the left cell
         $this->MultiCell(40, 0, $left, 0, 'R', 0, 2, '', '', true, 0);
-        
+
         $page_end_1 = $this->getPage();
         $y_end_1 = $this->GetY();
-        
+
         $this->setPage($page_start);
-        
+
         // write the right cell
         $this->MultiCell(0, 0, $right, 0, 'J', 0, 1, $this->GetX() ,$y_start, true, 0);
-        
+
         $page_end_2 = $this->getPage();
         $y_end_2 = $this->GetY();
-        
+
         // set the new row position by case
         if (max($page_end_1,$page_end_2) == $page_start) {
             $ynew = max($y_end_1, $y_end_2);
@@ -47,7 +47,7 @@ class MYPDF extends TCPDF {
         } else {
             $ynew = $y_end_2;
         }
-        
+
         $this->setPage(max($page_end_1,$page_end_2));
         $this->SetXY($this->GetX(),$ynew);
     }
@@ -91,7 +91,7 @@ $pdf->setLanguageArray($l);
 $pdf->SetFont('helvetica', '', 12);
 
   include '/var/www/feastdb/include/config/mysql_login.php';
-  mysql_connect("localhost", $mysqluser, $mysqlpass);
+  mysql_connect(MYSQL_HOST, $mysqluser, $mysqlpass);
   mysql_select_db("mowdata");
 
 
@@ -165,12 +165,12 @@ $tMID = $row['mid'];
 if ($row['dType']=="R") {
 	//this client receives regular deliveries
 	//does this person have a meal scheduled for this weekday?
-	if ($row["d" . $thisWDay] == 1){ 
+	if ($row["d" . $thisWDay] == 1){
 		if ($specials[$tMID]['is'] == 1){
 			if ($specials[$tMID]['suspend'] != 1){
 		//cancel if there is a suspension
 		//add special meal if there is one
-		
+
 		$rTotals['no'] ++;
 		$rTotals['meals'] += $specials[$tMID]['meals'];
 		$RouteOut[$j]  = $specials[$tMID];
@@ -201,7 +201,7 @@ if ($row['dType']=="R") {
 				$RouteOut[$j]['special'] = 1;
 			}
 		}
-		if ($RouteOut[$j]['special']  == 1) 
+		if ($RouteOut[$j]['special']  == 1)
 		$rTotals['special'] += $RouteOut[$j]['meals'];
 		$j++;
 		 }
@@ -263,9 +263,9 @@ if ($row['dType']=="R") {
 	                       }
 			}
 		}
-		if ($RouteOut[$j]['special']  == 1) 
+		if ($RouteOut[$j]['special']  == 1)
 		$rTotals['special'] += $RouteOut[$j]['meals'];
-		$j++;	
+		$j++;
 		}
 	} else {
 		//  client does not normally receive meals on this day
@@ -273,7 +273,7 @@ if ($row['dType']=="R") {
 			if ($specials[$tMID]['suspend'] != 1){
                 $RouteOut[$j]['label']  = $row['mLabel'];
                 $RouteOut[$j]['route']  = $row['dRoute'];
-	
+
 		$rTotals['no'] ++;
 		$rTotals['meals'] += $specials[$tMID]['meals'];
 		$RouteOut[$j]  = $specials[$tMID];
@@ -305,7 +305,7 @@ if ($row['dType']=="R") {
 				$RouteOut[$j]['special'] = 1;
 			}
 		}
-		if ($RouteOut[$j]['special']  == 1) 
+		if ($RouteOut[$j]['special']  == 1)
 		$rTotals['special'] += $RouteOut[$j]['meals'];
 		$j++;
 		}
@@ -350,10 +350,10 @@ if ($row['dType']=="R") {
 				$RouteOut[$j]['special'] = 1;
 			}
 		}
-		if ($RouteOut[$j]['special']  == 1) 
+		if ($RouteOut[$j]['special']  == 1)
 		$rTotals['special'] += $RouteOut[$j]['meals'];
 		$j++;
-		
+
 
  }
 }
@@ -389,7 +389,7 @@ $strSideNo .= $rTotals['side_fs'] . $cReturn;
 
 
 // add a page
-//$pdf->startPageGroup(); 
+//$pdf->startPageGroup();
 $pdf->AddPage();
 
 
@@ -427,7 +427,7 @@ $row = mysql_fetch_array( $result );
 	$m_spec = "";
 	switch($RouteOut[$i]['portionsize']) {
 	case "D":
-		$m_spec .= " double"; 
+		$m_spec .= " double";
 		break;
 	case "L":
 		$m_spec .= " large";
@@ -533,6 +533,6 @@ $pdf->lastPage();
 $pdf->Output('labels.pdf', 'I');
 
 //============================================================+
-// END OF FILE                                                 
+// END OF FILE
 //============================================================+
 ?>
