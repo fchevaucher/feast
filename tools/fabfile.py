@@ -154,3 +154,9 @@ def dumpdb():
 def loaddb():
     fablib_docker.mysql_load(env, DB_NAME, 'dump', target_container=contname('mysql'))
 
+@task
+def chpass(username='kateri', password='foobar'):
+    print "Changing password for user '%s' to '%s'" % (username, password)
+    cmd = "update usr_settings set md5phash=MD5('%s') where usrname='%s'" % (password, username)
+    fablib_docker.mysql_run(env, cmd, DB_NAME, target_container=contname('mysql'))
+
