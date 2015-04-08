@@ -72,7 +72,7 @@ DATA_CONTAINERS = [
 def make_images():
     with env.cd(op.join(PROJECT_ROOT, 'tools')):
         env.run('docker build -t %s apache/' % imgname('apache'))
-        env.run('docker pull dockerfile/mariadb')
+        env.run('docker pull mariadb')
 
 @task
 def clean(only=None, withdata=False):
