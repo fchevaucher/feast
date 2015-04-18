@@ -3,6 +3,6 @@
 // Enter the username and password of the user.
 define('MYSQL_HOST', 'mysql');
 $mysqluser = "root";
-$mysqlpass = "";
+$mysqlpass = "foobar";
 
 ?>

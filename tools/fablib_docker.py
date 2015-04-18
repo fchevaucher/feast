@@ -133,10 +133,10 @@ def mysql_run(env, cmd, dbname, target_container):
     cmd = cmd.replace("'", "'\\''")
     tryrun(
         env,
-        'dockerfile/mariadb',
+        'mariadb',
         None,
         '-it --rm --link %s:mysql' % target_container,
-        cmd="bash -c 'mysql -h mysql -D %s --execute \"%s\"'" % (dbname, cmd),
+        cmd="bash -c 'mysql -h mysql -D %s --password=foobar --execute \"%s\"'" % (dbname, cmd),
         restart=False,
     )
 
@@ -146,9 +146,9 @@ def mysql_dump(env, dbname, dumpname, target_container):
     print green("Dumping SQL to %s" % filename)
     tryrun(
         env,
-        'dockerfile/mariadb',
+        'mariadb',
         opts='--rm --link %s:mysql' % target_container,
-        cmd='bash -c \'mysqldump -h mysql %s | gzip -c > /tmp/%s\'' % (dbname, tmpname),
+        cmd='bash -c \'mysqldump -h mysql %s --password=foobar | gzip -c > /tmp/%s\'' % (dbname, tmpname),
         restart=False,
         mounts=[
             ('tools/dumps', '/tmp', True),
@@ -169,9 +169,9 @@ def mysql_load(env, dbname, dumpname, target_container):
     print green("Loading SQL from %s" % filename)
     tryrun(
         env,
-        'dockerfile/mariadb',
+        'mariadb',
         opts='--rm --link %s:mysql' % target_container,
-        cmd='bash -c \'gunzip -c /tmp/%s | mysql -h mysql -D %s\'' % (filename, dbname),
+        cmd='bash -c \'gunzip -c /tmp/%s | mysql -h mysql -D %s --password=foobar\'' % (filename, dbname),
         restart=False,
         mounts=[
             ('tools/dumps', '/tmp/', False),

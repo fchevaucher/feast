@@ -99,23 +99,23 @@ def start(port=None):
     created = fablib_docker.ensure_data_container(
         env,
         contname('mysql', suffix='data'),
-        base_image='dockerfile/mariadb',
+        base_image='mariadb',
     )
     fablib_docker.tryrun(
         env,
-        'dockerfile/mariadb',
+        'mariadb',
         contname('mysql'),
-        '-d --volumes-from %s' % contname('mysql', suffix='data'),
+        '-d --volumes-from %s -e MYSQL_ROOT_PASSWORD=foobar' % contname('mysql', suffix='data'),
     )
     if created:
-        # If a freshly created container, we have to create a new DB.
-        time.sleep(2)
+        print "It's a fresh DB, we have to initialize it"
+        time.sleep(10) # We have to wait that the mariadb container is properly running.
         fablib_docker.tryrun(
             env,
-            'dockerfile/mariadb',
-            contname('mysql-cmd'),
+            'mariadb',
+            None,
             '-it --rm --link %s:mysql' % contname('mysql'),
-            cmd='bash -c \'mysqladmin -h mysql create %s\'' % DB_NAME,
+            cmd='bash -c \'mysqladmin -h mysql --password=foobar create %s\'' % DB_NAME,
             restart=False,
         )
     fablib_docker.tryrun(
