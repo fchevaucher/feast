@@ -52,7 +52,7 @@ if (!defined('K_TCPDF_EXTERNAL_CONFIG')) {
 		$k_path_main .= '/';
 	}
 	*/
-	$k_path_main = "/var/www/feastdb/public/tcpdf/";
+	$k_path_main = "/var/www/public/tcpdf/";
 	/**
 	 * Installation path (/var/www/tcpdf/).
 	 * By default it is automatically calculated but you can also set it as a fixed string to improve performances.

@@ -1,8 +1,8 @@
 <?php
 
-include "../showerror.php";
-require_once('../../public/tcpdf/config/lang/eng.php');
-require_once('../../public/tcpdf/tcpdf.php');
+// include "../showerror.php";
+require_once('../public/tcpdf/config/lang/eng.php');
+require_once('../public/tcpdf/tcpdf.php');
 //use to create newline when generating pdfs
 $cReturn = "\n";
 $resIngNo = 0;
@@ -53,7 +53,6 @@ class MYPDF extends TCPDF {
     }
 
 }
-
 $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
 // set document information
@@ -92,7 +91,7 @@ $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 $pdf->setLanguageArray($l);
 $pdf->SetFont('helvetica', '', 12);
 
-  include '../config/mysql_login.php';
+  include '../include/config/mysql_login.php';
   mysql_connect(MYSQL_HOST, $mysqluser, $mysqlpass);
   mysql_select_db("mowdata");
 

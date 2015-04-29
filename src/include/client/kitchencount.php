@@ -4,7 +4,7 @@ if (isset($_GET['print']))
 $printNow = 1;
 
 if ($printNow == 1)
-include '../include/client/kitchenpdf.php';
+  include '../include/client/kitchenpdf.php';
 else {
 
 $panel=array();
