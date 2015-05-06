@@ -62,9 +62,23 @@ $pdf->SetTitle('Route Sheets');
 $pdf->SetSubject('Santropol Roulant Route Sheets');
 $pdf->SetKeywords('Santropol, Santropol Roulant, popote, route sheets, route');
 
+if (empty($_POST['date_day']) && empty($_POST['date_month']) && empty($_POST['date_year'])) {
+	$thisDay = date('d');
+	$thisMonth = date('m');
+	$thisYear = date('y');
+} else {
+	$thisDay = $_POST['date_day'];
+	$thisMonth = $_POST['date_month'];
+	$thisYear = $_POST['date_year'];
+}
+$date = mktime(0, 0, 0, $thisMonth, $thisDay, $thisYear);
+$thisWDay = date('D', $date);
+
 // set default header data
+// $pdf->SetHeaderData('logo350_color.jpg', 20, 'Santropol Roulant', 'Phone: (514) 284-9335
+// ' . date('F jS, Y') . '                                     Kitchen Count Report');
 $pdf->SetHeaderData('logo350_color.jpg', 20, 'Santropol Roulant', 'Phone: (514) 284-9335
-' . date('F jS, Y') . '                                     Kitchen Count Report');
+' . date('F jS, Y', $date) . '                                     Kitchen Count Report');
 
 // set header and footer fonts
 $pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
@@ -97,10 +111,10 @@ $pdf->SetFont('helvetica', '', 12);
 
 
 //set some variables
-$thisDay = date('d');
-$thisWDay = date('D');
-$thisMonth = date('m');
-$thisYear = date('y');
+// $thisDay = date('d');
+// $thisWDay = date('D');
+// $thisMonth = date('m');
+// $thisYear = date('y');
 $thisTable = "meals" . $thisMonth . "_" . $thisYear;
 $thisTimeStamp = mktime(0, 0, $thisDay, $thisMonth, 1, $thisYear);
 
