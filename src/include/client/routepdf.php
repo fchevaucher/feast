@@ -1,4 +1,136 @@
 <?php
+	//All deliveries for today will be processed once now.
+	//This will reduce the amount of work needed to be done for creation
+	//of route sheets and will simplify billing output.
+
+	if (ctype_digit($_POST['date_day']) && ctype_digit($_POST['date_month']) && ctype_digit($_POST['date_year'])) {
+		$thisDay = $_POST['date_day'];
+		$thisMonth = $_POST['date_month'];
+		$thisYear = $_POST['date_year'];
+	} else {
+		$thisDay = date('d');
+		$thisMonth = date('m');
+		$thisYear = date('y');
+	}
+
+	$date = mktime(0, 0, 0, $thisMonth, $thisDay, $thisYear);
+	$today = mktime(0, 0, 0);
+	$thisWDay = date('D', $date);
+
+	//we should expel past billed meals for today.
+	$query = "DELETE FROM mowdata.meals_billed WHERE date ='20" . $thisYear . "-" . $thisMonth . "-" . $thisDay . "'";
+	$result = mysql_query($query);
+
+	//create an array and store all special meals
+	mysql_select_db("mowdata");
+
+	$specials = array();
+	$query = "SELECT * FROM meals_scheduled  WHERE mDate='20" . $thisYear . "-" . $thisMonth . "-" . $thisDay . "'";
+	$result = mysql_query($query);
+	while($row = mysql_fetch_array( $result )) {
+		$tMID = $row['mid'];
+		$specials[$tMID]['is'] = 1;
+		$specials[$tMID]['mid'] = $row['mid'];
+		$specials[$tMID]['meals'] = $row['mNumber'];
+		$specials[$tMID]['portionsize'] = $row['mPortion'];
+		$specials[$tMID]['side_ds'] = $row['mSideds'];
+		$specials[$tMID]['side_dd'] = $row['mSidedd'];
+		$specials[$tMID]['side_fs'] = $row['mSidefs'];
+		$specials[$tMID]['side_gs'] = $row['mSidegs'];
+		$specials[$tMID]['side_pd'] = $row['mSidepd'];
+		$specials[$tMID]['side_gz'] = $row['mSidegz'];
+		$specials[$tMID]['side_vb'] = $row['mSidevb'];
+		$specials[$tMID]['side_vz'] = $row['mSidevz'];
+		$specials[$tMID]['suspend'] = $row['mSuspend'];
+	}
+//select count(agent_id) as cnt from survey_table;
+
+		$query = "SELECT * FROM mowdata.client WHERE mealstatus='A'";
+		$result = mysql_query($query);
+		while($row=mysql_fetch_array($result)) {
+			//reset to ensure the last meals aren't assigned to this user
+			$meals   = 0;
+			$side_vz = 0;
+			$payscale = 0;
+
+			if($row['payscale'])
+				$payscale = $row['payscale'];
+
+			$tMID = $row['mid'];
+			if ($row['dType']=="R") {
+				//this client receives regular deliveries
+				//does this person have a meal scheduled for this weekday?
+				if ($row["d" . $thisWDay] == 1){
+					if ($specials[$tMID]['is'] == 1){
+						if ($specials[$tMID]['suspend'] != 1){
+							//cancel if there is a suspension
+							//add special meal if there is one
+							$meals   = $specials[$tMID]['meals'];
+							$side_ds = $specials[$tMID]['side_ds'];
+							$side_dd = $specials[$tMID]['side_dd'];
+							$side_fs =  $specials[$tMID]['side_fs'];
+							$side_gs = $specials[$tMID]['side_gs'];
+							$side_pd = $specials[$tMID]['side_pd'];
+							$side_gz = $specials[$tMID]['side_gz'];
+							$side_vb =  $specials[$tMID]['side_vb'];
+							$side_vz = $specials[$tMID]['side_vz'];
+							$portion = $specials[$tMID]['portionsize'];
+						}
+					} else {
+							//output the individuals default delivery
+						$queryb = "SELECT * FROM mowdata.meals_default WHERE mid='" . $tMID . "'";
+						$resultb = mysql_query($queryb);
+						$rowb = mysql_fetch_array( $resultb );
+						$meals   = $rowb['d' . $thisWDay . 'Number'];
+						$side_ds =$rowb['d' . $thisWDay . 'Sideds'];
+						$side_dd =$rowb['d' . $thisWDay . 'Sidedd'];
+						$side_fs = $rowb['d' . $thisWDay . 'Sidefs'];
+						$side_gs =$rowb['d' . $thisWDay . 'Sidegs'];
+						$side_pd = $rowb['d' . $thisWDay . 'Sidepd'];
+						$side_gz =$rowb['d' . $thisWDay . 'Sidegz'];
+						$side_vb =$rowb['d' . $thisWDay . 'Sidevb'];
+						$side_vz =$rowb['d' . $thisWDay . 'Sidevz'];
+						$portion = $rowb['d' . $thisWDay . 'Portion'];
+					}
+				} else {
+					if (($specials[$tMID]['is'] == 1)&&($specials[$tMID]['suspend'] != 1)){
+						//output a special delivery
+						$meals   = $specials[$tMID]['meals'];
+						$side_ds = $specials[$tMID]['side_ds'];
+						$side_dd = $specials[$tMID]['side_dd'];
+						$side_fs =  $specials[$tMID]['side_fs'];
+						$side_gs = $specials[$tMID]['side_gs'];
+						$side_pd = $specials[$tMID]['side_pd'];
+						$side_gz = $specials[$tMID]['side_gz'];
+						$side_vb =  $specials[$tMID]['side_vb'];
+						$side_vz = $specials[$tMID]['side_vz'];
+						$portion = $specials[$tMID]['portionsize'];
+				}
+			}
+		} elseif ($specials[$tMID]['is'] == 1){
+			//this client receives episodic deliveries
+			//output the individuals default delivery
+						$meals   = $specials[$tMID]['meals'];
+						$side_ds = $specials[$tMID]['side_ds'];
+						$side_dd = $specials[$tMID]['side_dd'];
+						$side_fs =  $specials[$tMID]['side_fs'];
+						$side_gs = $specials[$tMID]['side_gs'];
+						$side_pd = $specials[$tMID]['side_pd'];
+						$side_gz = $specials[$tMID]['side_gz'];
+						$side_vb =  $specials[$tMID]['side_vb'];
+						$side_vz = $specials[$tMID]['side_vz'];
+						$portion = $specials[$tMID]['portionsize'];
+		}
+		if (($meals > 0)||($side_vz > 0)){
+		$addbill = "INSERT INTO mowdata.meals_billed (";
+		$addbill .= "mid,mNumber,mSize,mSidedd,mSideds,mSidefs,mSidegs,mSidepd,mSidegz,mSidevb,mSidevz,payscale,";
+		$addbill .= "date,editor) VALUES ('" . $tMID . "','" . $meals . "','" . $portion . "','" . $side_dd . "','" . $side_ds;
+		$addbill .= "','" . $side_fs . "','" . $side_gs . "','" . $side_pd . "','" . $side_gz . "','" . $side_vb;
+		$addbill .= "','" . $side_vz . "','" . $payscale . "','20" . $thisYear . "-" . $thisMonth . "-" . $thisDay . "','" .  $f_user ."')";
+		$addbillresult = mysql_query($addbill) or die(mysql_error());
+		}
+	}
+	unset($specials);
 
 //function for sorting
 function cmp($a, $b){
@@ -70,8 +202,9 @@ $pdf->SetSubject('Santropol Roulant Route Sheets');
 $pdf->SetKeywords('Santropol, Santropol Roulant, popote, route sheets, route');
 
 // set default header data
+
 $pdf->SetHeaderData('logo350_color.jpg', 20, 'Santropol Roulant', 'Phone: (514) 284-9335                         Ce document contient des informations confidentielles.
-' . date('F jS, Y') . '                                     This page contains CONFIDENTIAL information.');
+' . date('F jS, Y', $date) . '                                     This page contains CONFIDENTIAL information.');
 
 // set header and footer fonts
 $pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
@@ -103,11 +236,6 @@ $pdf->SetFont('helvetica', '', 12);
   mysql_select_db("mowdata");
 
 
-//set some variables
-$thisDay = date('d');
-$thisWDay = date('D');
-$thisMonth = date('m');
-$thisYear = date('y');
 $thisTable = "meals" . $thisMonth . "_" . $thisYear;
 $thisTimeStamp = mktime(0, 0, $thisDay, $thisMonth, 1, $thisYear);
 
@@ -313,6 +441,12 @@ if($i < 1)
 
 // ----END GET MEALS
 
+
+// Delete info for reports generated in the future
+if ($today < $date) {
+	$query = "DELETE FROM mowdata.meals_billed WHERE date ='20" . $thisYear . "-" . $thisMonth . "-" . $thisDay . "'";
+	$result = mysql_query($query);
+}
 
 //---------------------------------------------------------------------------
 //

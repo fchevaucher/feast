@@ -6,133 +6,8 @@ if (isset($_GET['print']))
 if ($printNow == 1) {
   include '../include/client/routepdf.php';
 } else {
-		//All deliveries for today will be processed once now.
-		//This will reduce the amount of work needed to be done for creation
-		//of route sheets and will simplify billing output.
-	
-	
-		$thsyear = date('y');
-		$thsmonth = date('m');
-		$thsday = date('d');
-		$thisWDay = date('D');
-
-		//we should expel past billed meals for today.
-		$query = "DELETE FROM mowdata.meals_billed WHERE date ='20" . $thsyear . "-" . $thsmonth . "-" . $thsday . "'";
-		$result = mysql_query($query); 
-		
-	
-	//create an array and store all special meals
-	mysql_select_db("mowdata");
-		
-	$specials = array();
-	$query = "SELECT * FROM meals_scheduled  WHERE mDate='20" . $thsyear . "-" . $thsmonth . "-" . $thsday . "'";
-	$result = mysql_query($query);
-	while($row = mysql_fetch_array( $result )) {
-		$tMID = $row['mid'];
-		$specials[$tMID]['is'] = 1;
-		$specials[$tMID]['mid'] = $row['mid'];
-		$specials[$tMID]['meals'] = $row['mNumber'];
-		$specials[$tMID]['portionsize'] = $row['mPortion'];
-		$specials[$tMID]['side_ds'] = $row['mSideds'];
-		$specials[$tMID]['side_dd'] = $row['mSidedd'];
-		$specials[$tMID]['side_fs'] = $row['mSidefs'];
-		$specials[$tMID]['side_gs'] = $row['mSidegs'];
-		$specials[$tMID]['side_pd'] = $row['mSidepd'];
-		$specials[$tMID]['side_gz'] = $row['mSidegz'];
-		$specials[$tMID]['side_vb'] = $row['mSidevb'];
-		$specials[$tMID]['side_vz'] = $row['mSidevz'];
-		$specials[$tMID]['suspend'] = $row['mSuspend'];
-	}
-//select count(agent_id) as cnt from survey_table; 
-				
-		$query = "SELECT * FROM mowdata.client WHERE mealstatus='A'";
-		$result = mysql_query($query);
-		while($row=mysql_fetch_array($result)) {
-			//reset to ensure the last meals aren't assigned to this user
-			$meals   = 0; 
-			$side_vz = 0;
-			$payscale = 0;
-
-			if($row['payscale'])
-				$payscale = $row['payscale'];
-			
-			$tMID = $row['mid'];
-			if ($row['dType']=="R") {
-				//this client receives regular deliveries
-				//does this person have a meal scheduled for this weekday?
-				if ($row["d" . date('D')] == 1){ 
-					if ($specials[$tMID]['is'] == 1){
-						if ($specials[$tMID]['suspend'] != 1){
-							//cancel if there is a suspension
-							//add special meal if there is one
-							$meals   = $specials[$tMID]['meals'];
-							$side_ds = $specials[$tMID]['side_ds'];
-							$side_dd = $specials[$tMID]['side_dd'];
-							$side_fs =  $specials[$tMID]['side_fs'];
-							$side_gs = $specials[$tMID]['side_gs'];
-							$side_pd = $specials[$tMID]['side_pd']; 
-							$side_gz = $specials[$tMID]['side_gz']; 
-							$side_vb =  $specials[$tMID]['side_vb']; 
-							$side_vz = $specials[$tMID]['side_vz'];
-							$portion = $specials[$tMID]['portionsize'];
-						}
-					} else {
-							//output the individuals default delivery
-						$queryb = "SELECT * FROM mowdata.meals_default WHERE mid='" . $tMID . "'";
-						$resultb = mysql_query($queryb);
-						$rowb = mysql_fetch_array( $resultb );
-						$meals   = $rowb['d' . $thisWDay . 'Number'];
-						$side_ds =$rowb['d' . $thisWDay . 'Sideds'];
-						$side_dd =$rowb['d' . $thisWDay . 'Sidedd'];
-						$side_fs = $rowb['d' . $thisWDay . 'Sidefs'];
-						$side_gs =$rowb['d' . $thisWDay . 'Sidegs'];
-						$side_pd = $rowb['d' . $thisWDay . 'Sidepd'];
-						$side_gz =$rowb['d' . $thisWDay . 'Sidegz'];
-						$side_vb =$rowb['d' . $thisWDay . 'Sidevb'];
-						$side_vz =$rowb['d' . $thisWDay . 'Sidevz'];
-						$portion = $rowb['d' . $thisWDay . 'Portion'];
-					}
-				} else {
-					if (($specials[$tMID]['is'] == 1)&&($specials[$tMID]['suspend'] != 1)){
-						//output a special delivery
-						$meals   = $specials[$tMID]['meals'];
-						$side_ds = $specials[$tMID]['side_ds'];
-						$side_dd = $specials[$tMID]['side_dd'];
-						$side_fs =  $specials[$tMID]['side_fs'];
-						$side_gs = $specials[$tMID]['side_gs'];
-						$side_pd = $specials[$tMID]['side_pd']; 
-						$side_gz = $specials[$tMID]['side_gz']; 
-						$side_vb =  $specials[$tMID]['side_vb']; 
-						$side_vz = $specials[$tMID]['side_vz'];
-						$portion = $specials[$tMID]['portionsize'];
-				}
-			}
-		} elseif ($specials[$tMID]['is'] == 1){
-			//this client receives episodic deliveries
-			//output the individuals default delivery
-						$meals   = $specials[$tMID]['meals'];
-						$side_ds = $specials[$tMID]['side_ds'];
-						$side_dd = $specials[$tMID]['side_dd'];
-						$side_fs =  $specials[$tMID]['side_fs'];
-						$side_gs = $specials[$tMID]['side_gs'];
-						$side_pd = $specials[$tMID]['side_pd']; 
-						$side_gz = $specials[$tMID]['side_gz']; 
-						$side_vb =  $specials[$tMID]['side_vb']; 
-						$side_vz = $specials[$tMID]['side_vz'];
-						$portion = $specials[$tMID]['portionsize'];
-		}
-		if (($meals > 0)||($side_vz > 0)){
-		$addbill = "INSERT INTO mowdata.meals_billed (";
-		$addbill .= "mid,mNumber,mSize,mSidedd,mSideds,mSidefs,mSidegs,mSidepd,mSidegz,mSidevb,mSidevz,payscale,";
-		$addbill .= "date,editor) VALUES ('" . $tMID . "','" . $meals . "','" . $portion . "','" . $side_dd . "','" . $side_ds;
-		$addbill .= "','" . $side_fs . "','" . $side_gs . "','" . $side_pd . "','" . $side_gz . "','" . $side_vb;
-		$addbill .= "','" . $side_vz . "','" . $payscale . "','20" . $thsyear . "-" . $thsmonth . "-" . $thsday . "','" .  $f_user ."')";
-		$addbillresult = mysql_query($addbill) or die(mysql_error());
-		}		
-	}
-	unset($specials);
-	
-?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head><title>FeastDB - Fireboy Technologies</title><meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
 <script type="text/javascript" src="clib/ncwid.js"></script>
@@ -154,7 +29,20 @@ cellspacing="0">
 </tr><tr id="sr">
 <td class="ll"><div style="font-size:13px;padding:0 25px; float:right; width:200px;color:#BBBBBB;">Let's print off the route sheets.<br />&nbsp;</div></td>
 <td class="gr"><img src="theme/default/p1/arw.gif" width="7" height="15" border="0" alt="" /></td>
-<th class="gd" rowspan="2" colspan="2"><div id="nf"><div class="gtle">Please select today's meal ingredients:</div><div
+<th class="gd" rowspan="2" colspan="2">
+
+<div id="nf"><div class="gtle">Please pick a date:</div><div
+style="width:350px;clear:both;text-align:right;">
+<table cellspacing="0" style="width:100%;padding:4px;margin:2px;">
+<tr><td>
+  <input type="text" name="date_day" placeholder="day" style="width:20px;">
+  <input type="text" name="date_month" placeholder="month" style="width:20px;">
+  <input type="text" name="date_year" placeholder="year" style="width:20px;">
+</td></tr></table></div>
+</div>
+
+
+<div id="nf"><div class="gtle">Please select today's meal ingredients:</div><div
 style="width:350px;clear:both;text-align:right;">
 <table cellspacing="0" style="width:100%;padding:4px;margin:2px;">
 <tr><td style="vertical-align:top;">
@@ -181,4 +69,6 @@ style="width:350px;clear:both;text-align:right;">
 <td rowspan="2"><img src="theme/default/p1/apl.gif" width="138"height="150" border="0"alt="FeastDB" /></td>
 <td class="gr"> </td></tr></table></form></div><div class="fbt"><a 
 href="http://www.fireboytech.com">2008 © fireboy technologies</a></div>
-</div></div></div></center></body></html><?php } ?>
+</div></div></div></center></body></html>
+<?php
+ } ?>
