@@ -96,10 +96,19 @@ $pdf->SetFont('helvetica', '', 12);
 
 
 //set some variables
-$thisDay = date('d');
-$thisWDay = date('D');
-$thisMonth = date('m');
-$thisYear = date('y');
+
+if (ctype_digit($_POST['date_day']) && ctype_digit($_POST['date_month']) && ctype_digit($_POST['date_year'])) {
+	$thisDay = $_POST['date_day'];
+	$thisMonth = $_POST['date_month'];
+	$thisYear = $_POST['date_year'];
+} else {
+	$thisDay = date('d');
+	$thisMonth = date('m');
+	$thisYear = date('y');
+}
+$date = mktime(0, 0, 0, $thisMonth, $thisDay, $thisYear);
+$thisWDay = date('D', $date);
+
 $thisTable = "meals" . $thisMonth . "_" . $thisYear;
 $thisTimeStamp = mktime(0, 0, $thisDay, $thisMonth, 1, $thisYear);
 
@@ -475,7 +484,7 @@ $row = mysql_fetch_array( $result );
 	$pdf->SetFont('helvetica', 'B', 12);
 	$pdf->MultiCell(73, 0, $name, 0, 'L',  0,  0);
 	$pdf->SetFont('helvetica', 'R', 10);
-	$pdf->MultiCell(24, 0, 	date("D, M-d"), 0, 'R',  0,  1);
+	$pdf->MultiCell(24, 0, 	date("D, M-d", $date), 0, 'R',  0,  1);
 	$pdf->MultiCell(65, 0, $m_spec, 0, 'L',  0,  0);
 	$pdf->SetFont('helvetica', 'I', 8);
 	$pdf->MultiCell(32, 6, 	$routeW, 0, 'R',  0,  1);
@@ -492,7 +501,7 @@ $row = mysql_fetch_array( $result );
 	$pdf->SetFont('helvetica', 'B', 12);
 	$pdf->MultiCell(73, 0, $name, 0, 'L',  0,  0,112.5);
 	$pdf->SetFont('helvetica', 'R', 10);
-	$pdf->MultiCell(24, 0, 	date("D, M-d"), 0, 'R',  0,  1);
+	$pdf->MultiCell(24, 0, 	date("D, M-d", $date), 0, 'R',  0,  1);
 	$pdf->MultiCell(65, 0, $m_spec, 0, 'L',  0,  0,112.5);
 	$pdf->SetFont('helvetica', 'I', 8);
 	$pdf->MultiCell(32, 6, 	$routeW, 0, 'R',  0,  1);

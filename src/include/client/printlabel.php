@@ -34,7 +34,19 @@ cellspacing="0">
 </tr><tr id="sr">
 <td class="ll"><div style="font-size:13px;padding:0 25px; float:right; width:200px;color:#BBBBBB;">Let's print off the meal labels.<br />&nbsp;</div></td>
 <td class="gr"><img src="theme/default/p1/arw.gif" width="7" height="15" border="0" alt="" /></td>
-<th class="gd" rowspan="2" colspan="2"><div id="nf"><div class="gtle">Please select today's meal ingredients:</div><div
+<th class="gd" rowspan="2" colspan="2">
+
+<div id="nf"><div class="gtle">Please pick a date:</div><div
+style="width:350px;clear:both;text-align:right;">
+<table cellspacing="0" style="width:100%;padding:4px;margin:2px;">
+<tr><td>
+  <input type="text" name="date_day" placeholder="day" style="width:20px;">
+  <input type="text" name="date_month" placeholder="month" style="width:20px;">
+  <input type="text" name="date_year" placeholder="year" style="width:20px;">
+</td></tr></table></div>
+</div>
+
+<div id="nf"><div class="gtle">Please select today's meal ingredients:</div><div
 style="width:350px;clear:both;text-align:right;">
 <table cellspacing="0" style="width:100%;padding:4px;margin:2px;">
 <tr><td style="vertical-align:top;">
