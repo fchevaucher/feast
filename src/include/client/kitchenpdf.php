@@ -62,14 +62,14 @@ $pdf->SetTitle('Route Sheets');
 $pdf->SetSubject('Santropol Roulant Route Sheets');
 $pdf->SetKeywords('Santropol, Santropol Roulant, popote, route sheets, route');
 
-if (empty($_POST['date_day']) && empty($_POST['date_month']) && empty($_POST['date_year'])) {
-	$thisDay = date('d');
-	$thisMonth = date('m');
-	$thisYear = date('y');
-} else {
+if (ctype_digit($_POST['date_day']) && ctype_digit($_POST['date_month']) && ctype_digit($_POST['date_year'])) {
 	$thisDay = $_POST['date_day'];
 	$thisMonth = $_POST['date_month'];
 	$thisYear = $_POST['date_year'];
+} else {
+	$thisDay = date('d');
+	$thisMonth = date('m');
+	$thisYear = date('y');
 }
 $date = mktime(0, 0, 0, $thisMonth, $thisDay, $thisYear);
 $thisWDay = date('D', $date);
