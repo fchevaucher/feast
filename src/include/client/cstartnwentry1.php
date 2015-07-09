@@ -315,6 +315,7 @@ delivering the meals.<br />&nbsp;</div></td>
 <option value="NDG">Notre Dame de Grace</option>
 <option value="CV">Downtown</option>
 <option value="WM">Westmount</option>
+<option value="TE">Test</option>
 </select></div>
 <div class="gtle">Please enter any directions which 
 may be helpful in finding the client's residence.</div><div 

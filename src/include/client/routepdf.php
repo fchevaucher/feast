@@ -453,7 +453,7 @@ if ($today < $date) {
 //              OUTPUT PDF ROUTE SHEETS
 //					(one route at a time)
 //---------------------------------------------------------------------------
-for ($q = 1; $q <= 8; $q++) {
+for ($q = 1; $q <= 9; $q++) {
 switch ($q) {
 	case 1:
 	$thsRoute = "CS";
@@ -486,6 +486,10 @@ switch ($q) {
 	case 8:
 	$thsRoute = "WM";
 	$hdRoute = "Westmount";
+	break;
+	case 9:
+	$thsRoute = "TE";
+	$hdRoute = "Test";
 	break;
 }
 

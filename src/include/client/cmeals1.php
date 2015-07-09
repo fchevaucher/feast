@@ -37,6 +37,9 @@ $dRoute = "Downtown";
   break;
 case "WM":
 $dRoute = "Westmount";
+  break;
+case "TE":
+$dRoute = "Test";
 }
 $dStat = "";
 switch ($row['mealstatus']) {

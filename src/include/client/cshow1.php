@@ -347,6 +347,9 @@ $dRoute = "Downtown";
   break;
 case "WM":
 $dRoute = "Westmount";
+  break;
+case "TE":
+$dRoute = "Test";
 }
 $dStat = "";
 switch ($row['mealstatus']) {
@@ -376,6 +379,7 @@ style=";margin-left:10px;" id="sRoute" onChange="mowRoute.submit()" name="newrou
 <option value="ME">Mile End</option>
 <option value="NDG">Notre Dame de Grace</option>
 <option value="WM">Westmount</option>
+<option value="TE">Test</option>
 </select></div></form><div 
 class="clName">Route</div></div>
 <div style="width:170px;"><div class="clName">Directions</div></div>

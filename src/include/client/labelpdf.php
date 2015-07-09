@@ -473,6 +473,9 @@ $row = mysql_fetch_array( $result );
 	case "WM":
 		$routeW = "Westmount";
 		break;
+	case "TE":
+		$routeW = "Test";
+		break;
 	}
 	if($cntr < 7) {
 	if($offset == 0) {

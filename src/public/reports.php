@@ -127,6 +127,9 @@ if(isset($_GET['display'])) {  //function for sorting
 		case "WM":
 		$dRoute = "Westmount";
 		break;
+		case "TE":
+		$dRoute = "Test";
+		break;
 		default:
 		$dRoute = "";
 	}
@@ -196,6 +199,7 @@ Select Route: <select name="route">
 <option value="MGW">McGill West</option>
 <option value="NDG">Notre Dame de Grace</option>
 <option value="WM">Westmount</option>
+<option value="TE">Test</option>
 <option value="ALL"> -----------</option>
 <option value="ALL">EXPORT ALL AS .CSV</option>
 </select>    <input type="submit" value="Display" />

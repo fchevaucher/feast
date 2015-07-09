@@ -131,7 +131,7 @@ header("Content-Disposition:inline;filename=touchbase.csv");
 	//sort the array alphabetically by last name
 	uasort($people, 'cmp');
 
-	for ($j=0;$j<=7;$j++) {
+	for ($j=0;$j<=8;$j++) {
 
 	//name route
 
@@ -167,6 +167,10 @@ header("Content-Disposition:inline;filename=touchbase.csv");
 		case 7:
 		$dlet =  "WM";
 		$droutename = "Westmount";
+		break;
+		case 8:
+		$dlet =  "TE";
+		$droutename = "Test";
 		break;
 		default:
 		$droutename = "";
